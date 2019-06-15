@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add new event</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="the_code.js"></script>
+    <link rel="stylesheet" href="style/newevent.css">
+</head>
+
+<body>
+    <form>
+        <div id="top">
+            <input type="text" id="title" placeholder="Title">
+            <input type="file" onchange="encodeImageFileAsURL(this,0)" name="file" id="top-img-input"
+                accept="image/x-png,image/jpeg">
+            <img src="" id="top-img">
+        </div>
+        <div id="quizzes">
+            <h3>Quizzes</h3>
+        </div>
+        <div id="add">
+            <span onclick="add()">Add Quiz</span>
+        </div>
+        <div id="publish">
+            <h3>Tags</h3>
+            <label class="container">Music</label>
+            <label class="container">Film</label>
+            <label class="container">Sport</label>
+            <label class="container">Football</label>
+            <label class="container">Art</label>
+            <label class="container">Piano</label>
+            <label class="container">Guitar</label>
+            <label class="container">Old times</label>
+            <label class="container">Future</label>
+            <label class="container">History</label>
+            <label class="container">Fantasy</label>
+            <label class="container">Math</label>
+            <label class="container">Physics</label>
+            <label class="container">Chemistry</label>
+            <label class="container">Sociology</label>
+            <label class="container">Physiology</label>
+            <label class="container">Religion</label>
+            <label class="container">Christianity</label>
+            <label class="container">Islam</label>
+            <label class="container">Buddhism</label>
+            <label class="container">Geography</label>
+            <label class="container">Ecology</label>
+            <label class="container">Fun</label>
+            <h3>Start</h3>
+            <input type="date" name="start" id="start_date">
+            <h3>End</h3>
+            <input type="date" name="end" id="end_date">
+            <div id="save">
+                <p class="publish" onmouseover="check_publish()" onclick="publish() "> Publish </p>
+                <p class="save" onclick="save()"> Not saved </p>
+            </div>
+        </div>
+    </form>
+    <div id="top-bar" w3-include-html="top-bar-no-search.html"></div>
+    <script src="include.js"></script>
+    <script src="newevent.js"></script>
+</body>
+
+</html>

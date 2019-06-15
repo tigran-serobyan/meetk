@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Profile</title>
+    <script src="the_code.js"></script>
+    <link rel="stylesheet" href="style/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div id="top">
+        <span id="top-all">
+            <img src="" id="profile_image">
+            <span id="top-name">
+                <h1 id="name_surname"></h1>
+                <h2 id="username"></h2>
+                <h3 id="location"></h3>
+            </span>
+        </span>
+    </div>
+    <div id="events">
+        <h3 id="events-title">Events</h3>
+    </div>
+    <div id="top-bar" w3-include-html="top-bar-no-search.html"></div>
+    <script src="include.js"></script>
+    <script src="profile.js"></script>
+</body>
+
+</html>

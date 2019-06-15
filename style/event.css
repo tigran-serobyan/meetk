@@ -1,0 +1,109 @@
+a{
+    text-decoration: none;
+}
+body{
+    margin: 0px;
+    position: relative;
+    padding: 55px 0px 0px;
+}
+#top-bar{
+    top:0px;
+    position: fixed;
+    width: 100%;
+    background-color: #ececec;
+}
+.top-bar-menu{
+    display: inline-block;
+    text-align: right;
+    width: 97%;
+    margin: 20px 0px 20px;
+}
+.top-bar-menu li{
+    display: inline;
+    position: relative;
+    padding: 22px 20px 22px 20px;
+}
+.top-bar-menu li:hover{
+    background-color: #cecece;
+}
+.dropdown{
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    width: 200%;
+    background-color: #ececec;
+}
+.dropdown a{
+    display: block;
+    padding: 5px 20px 5px 5px;
+}
+.dropdown a:hover{
+    background: #cecece;
+}
+.top-bar-menu li:hover .dropdown{
+    display: block;
+}
+input:focus{
+    outline: none;
+}
+#top-image{
+    background-size: cover;
+    width: 100%;
+    height: 600px;
+    text-align: center;
+}
+#gray{
+    width: 100%;
+    height: 600px;
+    display: inline-block;
+    padding: 100px 0px 0px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,0.6);
+}
+#title{
+    color: white;
+    font-size: 80px;
+    margin: 30px;
+}
+#username{
+    color: white;
+    font-size: 50px;
+    margin: 30px;
+}
+#join{
+    color: white;
+    font-size: 20px;
+    border: solid 2px white;
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    margin: 30px;
+    display: inline-block;
+}
+.today{
+    display: inline-block;
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    background: #006622;
+    padding: 10px;
+    font-size: 20px;
+}
+.past{
+    display: inline-block;
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    background: #cc8800;
+    padding: 10px;
+    font-size: 20px;
+}
+.soon{
+    display: inline-block;
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    background: #333;
+    padding: 10px;
+    font-size: 20px;
+}

@@ -1,0 +1,285 @@
+a{
+    text-decoration: none;
+}
+*{
+    transition: 0.8s;
+    font-family: sans-serif;
+}
+body{
+    background-image: url("back.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom;
+    margin: 0%;
+    padding: 0%;
+}
+h1{
+    display: inline-block;
+    width: 49.8%;
+    text-align: center;
+    color: white;
+    padding: 13% 2%;
+    font-size: 90px;
+    box-sizing: border-box;
+}
+#login{
+    background-color: rgba(255,255,255,0.8);
+    width: 49.8%;
+    box-sizing: border-box;
+    padding: 10% 3%;
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    min-height: 800px;
+}
+#register{
+    background-color: rgba(255,255,255,0.8);
+    width: 49.8%;
+    box-sizing: border-box;
+    padding: 2% 3%;
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    min-height: 800px;
+}
+label{
+    font-size: 60px;
+    display: block;
+    margin-bottom: 30px;
+}
+input{
+    font-size: 30px;
+    width: 80%;
+    display: inline-block;
+    margin: 8px 0px;
+    background: none;
+    border: solid 2px #222;
+    padding: 7px 12px; 
+    border-radius: 5px;
+    color: #222;
+}
+#register input{
+    color: white;
+}
+input[type = button]{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 40%;
+    display: block;
+    background: #222;
+    color: white
+}
+input[type = button]:hover{
+    width: 40%;
+    display: block;
+    background:#006622;
+    border-color:#006622;
+}
+::placeholder {
+    color: #222;
+    opacity: 1; 
+}
+.container {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.container input:checked ~ .checkmark {
+    background-color: #00802b;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+#name, #surname, #reg-pass,#reg-pass-repeat{
+    width: 37%;
+    margin-right:1%;
+}
+#reg-pass,#reg-pass-repeat{
+    margin-bottom: 17px;
+    position: relative;
+}
+#year{
+    width: 20%;
+    margin-right:1%;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: none;
+    color:#222;
+    border:none;
+    border: solid 2px #222;
+}
+#month{
+    width: 40%;
+    margin-right:1%;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: none;
+    color:#222;
+    border:none;
+    border: solid 2px #222;
+}
+#day{
+    width: 20%;
+    margin-right:1%;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: none;
+    color:#222;
+    border:none;
+    border: solid 2px #222;
+}
+option{
+    font-size: 20px;
+}
+option:hover{
+    background: #c07300;
+}
+#gender{
+    display: block;
+    margin-top: 17px;
+}
+#location{
+    width:80%;
+}
+#locationautocomplete-list{
+    position: fixed;
+    background: rgba(255,255,255,0.8);
+    padding: 5px;
+    border-radius: 5px;
+    overflow: auto;
+    max-height:100px;
+}
+#locationautocomplete-list div{
+    border-radius: 5px;
+    padding:2px
+}
+#locationautocomplete-list div:hover{
+    background: rgba(25,25,25,0.2);
+}
+#pass-message {
+    display:none;
+    background: rgba(255,255,255,0.95);
+    color: #333;
+    border-radius: 5px;
+    position: fixed;
+    z-index: 1;
+    padding: 20px;
+    margin-top: -185px;
+    margin-left: 15%;
+}
+#pass-message p {
+    padding: 10px 35px;
+    font-size: 18px;
+}
+.valid {
+    color: green;
+}
+.valid:before {
+    position: relative;
+    left: -35px;
+    content: "✔";
+}
+.invalid {
+    color: red;
+}
+.invalid:before {
+    position: relative;
+    left: -35px;
+    content: "✖";
+}
+input:focus{
+    outline: none;
+}
+@media only screen and (max-width: 1000px){
+    body{
+        background-size: cover;
+    } 
+    h1{
+        width: 100%;
+        margin: 0px;
+        font-size: 180px;
+    }
+    #register, #login{
+        text-align: center;
+        top: 0px;
+        width: 100%;
+        position: unset;
+    }
+    input{
+        font-size: 60px;
+    }
+    input[type = button]{
+        margin-top: 30px;
+        margin-bottom: 20px;
+        margin-left: 30%;
+        width: 40%;
+        font-size: 70px;
+    }
+    label{
+        font-size: 150px;
+    }
+    #reg-pass{
+        position: relative;
+    }
+    #pass-message{
+        position: absolute;
+        top: 1200px;
+        left: -3%;
+        text-align: left
+    }
+    .container{
+        font-size: 40px;
+        padding-left: 42px;
+    }
+    .checkmark{
+        width: 41px;
+        height: 41px;
+    }
+    .container .checkmark::after{
+        top: 12px;
+        left: 12px;
+        width: 17px;
+        height: 17px;
+    }
+}

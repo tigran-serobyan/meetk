@@ -1,0 +1,31 @@
+<span id="search-span">
+    <form>
+        <input type="text" placeholder="Search.." name="search" id="search-input" oninput="search_event()">
+    </form>
+</span>
+<span id="top-buttons-span">
+    <ul class="top-bar-menu">
+        <li id="add-top-button">
+            Add
+            <div class="dropdown">
+                <a id="new-event-top-button" href="newevent">New event</a>
+                <a id="new-quiz-top-button" href="newquiz">New quiz</a>
+            </div>
+        </li>
+        <li id="events-top-button">
+            Events
+            <div class="dropdown">
+                <a id="all-event-top-button" href="./home">Events</a>
+                <a id="real-time-top-button">Real time</a>
+            </div>
+        </li>
+        <li id="profile-top-button">
+            Profile
+            <div class="dropdown">
+                <a id="my-profile-top-button">My profile</a>
+                <a id="settings-event-top-button">Settings</a>
+                <a id="log-out-top-button" onclick="logout()">Log out</a>
+            </div>
+        </li>
+    </ul>
+</span>

@@ -1,0 +1,188 @@
+a{
+    text-decoration: none;
+    color: black;
+}
+body{
+    margin: 0px;
+    position: relative;
+    padding: 55px 0px 0px;
+}
+#top-bar{
+    top:0px;
+    position: fixed;
+    width: 100%;
+    background-color: #ececec;
+}
+#search-span form{
+    display: inline-block;
+    width: 22%;
+    margin: 0px 0px 0px 3%;
+    box-sizing: border-box;
+}
+#search-span form input{
+    padding: 20px 0px 20px 20px;
+    width: 80%;
+    margin: 0px -2px;
+    background: white;
+    border: solid 2px #ececec;
+    color: #006622;
+}
+.top-bar-menu{
+    display: inline-block;
+    text-align: right;
+    width: 70%;
+    margin: 20px 0px 0px;
+}
+.top-bar-menu li{
+    display: inline;
+    position: relative;
+    padding: 22px 20px 22px 20px;
+}
+.top-bar-menu li:hover{
+    background-color: #cecece;
+}
+.dropdown{
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    width: 200%;
+    background-color: #ececec;
+}
+.dropdown a{
+    display: block;
+    padding: 5px 20px 5px 5px;
+}
+.dropdown a:hover{
+    background: #cecece;
+}
+.top-bar-menu li:hover .dropdown{
+    display: block;
+}
+input:focus{
+    outline: none;
+}
+#going{
+    border-top: dashed 2px #acacac;
+    margin: 0% 3%;
+    display: none;
+}
+#joined{
+    border-top: dashed 2px #acacac;
+    margin: 0% 3%;
+    display: none;
+}
+#worldwide{
+    border-top: dashed 2px #acacac;
+    margin: 0% 3%;
+    display: none;
+}
+#all{
+    border-top: dashed 2px #acacac;
+    margin: 0% 3%;
+    display: none;
+}
+.event{
+    display: inline-block;
+    width: 20%;
+    margin: 1%;
+    height: 200px;
+    box-sizing: border-box;
+    color:white;
+    border-radius: 25px;
+    background-size: cover;
+    position: relative;
+}
+.gray{
+    width: 100%;
+    height: 200px;
+    display: inline-block;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,0.6);
+    border-radius: 25px;
+}
+.join_button{
+    display: inline-block;
+    text-decoration: none;
+    position: absolute;
+    margin-left: 5%;
+    padding: 5%;
+    color: white;
+    border: solid 2px white;
+    background: rgba(0,0,0,0.3);
+    top: 55%;
+    right: 15%;
+}
+.open_button{
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 5%;
+    padding: 5%;
+    color: white;
+    border: solid 2px white;
+    background: rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+@media only screen and (max-width: 1000px){
+    body{
+        padding: 210px 0px 0px;
+    }
+    #search-span form{
+        display: inline-block;
+        width: 93%;
+        margin: 20px 0px 0px 3%;
+        box-sizing: border-box;
+    }
+    #search-span form input{
+        font-size: 50px;
+        width: 100%;
+    }
+    #going, #joined, #worldwide, #all{
+        border-top: dotted 20px #cecece;
+    }
+    .top-bar-menu{
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        margin: 50px 0px 50px;
+        font-size: 50px;
+    }
+    .top-bar-menu li{
+        padding: 50px 30px;
+    }
+    .top-bar-menu li:hover{
+        background-color: #cecece;
+    }
+    .dropdown{
+        top: 158px;
+        padding: 20px;
+    }
+    .event{
+        width: 98%;
+        height: 700px;
+    }
+    .gray{
+        height: 700px;
+        padding: 60px;
+    }
+    h2{
+        font-size: 90px;
+        margin: 50px 5px 5px;
+    }
+    h3{
+        font-size: 70px;
+    }
+    .gray p{
+        font-size: 50px;
+    }
+    .join_button{
+        top: 60%;
+        right: 20%;
+    }
+    .open_button{
+        top: 60%;
+        right: 20%;
+        font-size: 50px;
+    }
+}
