@@ -1,2 +1,2 @@
 # Meetk
-Web to creat your quizzes and share it with your frients
+A social network for creating and sharing your quizzes with your friends
