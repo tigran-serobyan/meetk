@@ -4,52 +4,131 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var ip = require('ip');
 var fs = require('fs-extra');
-var users = fs.readJsonSync('./users.json').users;
-var logindata = fs.readJsonSync('./logindata.json').data;
-var events = fs.readJsonSync('./events.json').data;
-var quiz = fs.readJsonSync('./quiz.json').data;
-console.log(ip.address());
+var usersJson = fs.readJsonSync('./json/users.json');
+if (usersJson.users) {
+    var users = usersJson.users;
+}
+else {
+    var users = [];
+}
+var logindataJson = fs.readJsonSync('./json/logindata.json');
+if (logindataJson.data) {
+    var logindata = logindataJson.data;
+}
+else {
+    var logindata = [];
+}
+var eventsJson = fs.readJsonSync('./json/events.json');
+if (eventsJson.data) {
+    var events = eventsJson.data;
+}
+else {
+    var events = [];
+}
+var quizJson = fs.readJsonSync('./json/quiz.json');
+if (quizJson.data) {
+    var quiz = quizJson.data;
+}
+else {
+    var quiz = [];
+}
+var url = ip.address();
 var date = new Date();
 app.use(express.static("."));
 app.get('/', function (req, res) {
-    res.location('.');
+    res.redirect('/index.html');
 });
 app.get('/home', function (req, res) {
-    req.redirect('/home.html');
+    res.redirect('/home');
 });
 app.get('/event/:eventlink', function (req, res) {
-    res.location('/event.html?id=' + req.params.eventlink);
+    res.redirect('/event/?id=' + req.params.eventlink);
 });
 app.get('/newquiz', function (req, res) {
-    res.location('/newquiz.html');
+    res.redirect('/newquiz');
 });
-app.get('/newevent', function (req, res) {
-    res.location('/newevent.html');
+app.get('/newquiz/:link', function (req, res) {
+    res.redirect('/newquiz/?id=' + req.params.link);
+});
+app.get('/newevent/', function (req, res) {
+    res.redirect('/newevent');
+});
+app.get('/newevent/:link', function (req, res) {
+    res.redirect('/newevent/?id=' + req.params.link);
+});
+app.get('/myworks', function (req, res) {
+    res.redirect('/myworks');
 });
 app.get('/profile/:username', function (req, res) {
-    res.location('/profile.html?username=' + req.params.username);
+    res.redirect('/profile/?username=' + req.params.username);
+});
+app.get('/settings', function (req, res) {
+    res.redirect('/settings');
+});
+app.get('*', function (req, res) {
+    res.redirect('../page-not-found');
 });
 server.listen(3000);
-io.on('connection', function (socket) {
-    events = fs.readJsonSync('./events.json').data;
-    quiz = fs.readJsonSync('./quiz.json').data;
-    socket.on("open", function (data) {
-        var logedin = false;
-        for (var i = logindata.length - 1; i >= 0; i--) {
-            if (logindata[i].code.os == data.os && logindata[i].code.browser == data.browser && logindata[i].code.ip == data.ip) {
-                if (logindata[i].login == true) {
-                    io.sockets.emit("logedin", [data, logindata[i]]);
-                    logedin = true;
-                    break;
-                }
-                else {
-                    io.sockets.emit("notlogedin", data);
-                    break;
-                }
+function saveDataOnJson() {
+    for (var i in events) {
+        if (events[i].type == "published") {
+            if (events[i].end < date.getUTCFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getUTCDate()).slice(-2)) {
+                events[i].type = "ended";
             }
         }
-        if (logedin == false) {
-            io.sockets.emit("notlogedin", data);
+    }
+    fs.writeJson('./json/events.json', { "data": events }, err => {
+        if (err) return console.error(err);
+    });
+    fs.writeJson('./json/quiz.json', { "data": quiz }, err => {
+        if (err) return console.error(err);
+    });
+    fs.writeJson('./json/users.json', { "users": users }, err => {
+        if (err) return console.error(err);
+    });
+    fs.writeJson('./json/logindata.json', { "data": logindata }, err => {
+        if (err) return console.error(err);
+    });
+    console.log("All Info saved in json files");
+    setTimeout(() => {
+        saveDataOnJson();
+    }, 120000);
+}
+saveDataOnJson();
+io.on('connection', function (socket) {
+    socket.on("open", function (data) {
+        let info = data[0];
+        let code = data[1];
+        if (info && info != "null") {
+            let username = false;
+            for (var i in users) {
+                if (info.username == users[i].username && info.password == users[i].password) {
+                    username = true;
+                }
+            }
+            if (username) {
+                info = {
+                    "username": info.username,
+                    "data": date.getFullYear() + "." + (date.getUTCMonth() + 1) + "." + date.getUTCDate() + "." + date.getDay() + "." + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+                    "code": code,
+                    "login": true
+                }
+                logindata.push(info);
+                io.sockets.emit("logedin", [code, info]);
+            }
+            else {
+                info = {
+                    "username": info.username,
+                    "data": date.getFullYear() + "." + date.getUTCDate() + "." + date.getDay() + "." + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+                    "code": code,
+                    "login": false
+                }
+                logindata.push(info);
+                io.sockets.emit("notlogedin", code);
+            }
+        }
+        else {
+            io.sockets.emit("notlogedin", code);
         }
     })
     socket.on("get_events", function (data) {
@@ -77,9 +156,6 @@ io.on('connection', function (socket) {
         if (username) {
             users.push(info);
             io.sockets.emit("registered", code);
-            fs.writeJson('./users.json', { "users": users }, err => {
-                if (err) return console.error(err);
-            });
         }
     })
     socket.on("login", function (data) {
@@ -99,9 +175,6 @@ io.on('connection', function (socket) {
                 "login": true
             }
             logindata.push(info);
-            fs.writeJson('./logindata.json', { "data": logindata }, err => {
-                if (err) return console.error(err);
-            });
             io.sockets.emit("logedin", [code, info]);
         }
         else {
@@ -118,9 +191,6 @@ io.on('connection', function (socket) {
             "login": false
         }
         logindata.push(info);
-        fs.writeJson('./logindata.json', { "data": logindata }, err => {
-            if (err) return console.error(err);
-        });
         io.sockets.emit("notlogedin", code);
     })
     socket.on("get_event", function (data) {
@@ -131,7 +201,26 @@ io.on('connection', function (socket) {
                 break;
             }
         }
+        for (var i in the_event.quizzes) {
+            for (var j in quiz) {
+                if (the_event.quizzes[i].link == quiz[j].id) {
+                    var the_date = the_event.quizzes[i].date;
+                    the_event.quizzes[i] = quiz[j];
+                    the_event.quizzes[i].date = the_date
+                }
+            }
+        }
         io.sockets.emit("get_event", [data[0], the_event]);
+    })
+    socket.on("get_quiz", function (data) {
+        var the_quiz = "none";
+        for (var i in quiz) {
+            if (quiz[i].id == data[1]) {
+                the_quiz = quiz[i];
+                break;
+            }
+        }
+        io.sockets.emit("get_quiz", [data[0], the_quiz]);
     })
     socket.on("get_the_quizzes", function (data) {
         var the_quizzes = [];
@@ -151,6 +240,21 @@ io.on('connection', function (socket) {
         }
         io.sockets.emit("get_the_events", [data[0], the_events]);
     })
+    socket.on("get_my_works", function (data) {
+        var the_quizzes = [];
+        for (var i in quiz) {
+            if (quiz[i].username == data[1]) {
+                the_quizzes.push(quiz[i]);
+            }
+        }
+        var the_events = [];
+        for (var i in events) {
+            if (events[i].username == data[1]) {
+                the_events.push(events[i]);
+            }
+        }
+        io.sockets.emit("get_my_works", [data[0], the_quizzes, the_events]);
+    })
     socket.on("save_quiz", function (data) {
         var newquiz = true;
         for (var i in quiz) {
@@ -162,9 +266,6 @@ io.on('connection', function (socket) {
         if (newquiz) {
             quiz.push(data);
         }
-        fs.writeJson('./quiz.json', { "data": quiz }, err => {
-            if (err) return console.error(err);
-        });
     })
     socket.on("save_event", function (data) {
         var newevent = true;
@@ -177,20 +278,17 @@ io.on('connection', function (socket) {
         if (newevent) {
             events.push(data);
         }
-        fs.writeJson('./events.json', { "data": events }, err => {
-            if (err) return console.error(err);
-        });
     })
     socket.on("get_the_profile", function (data) {
-        for(var i in users){
-            if(users[i].username == data[1]){
+        for (var i in users) {
+            if (users[i].username == data[1]) {
                 var user_info = {};
-                for(var j in users[i]){
-                    if(j != "password"){
+                for (var j in users[i]) {
+                    if (j != "password") {
                         user_info[j] = users[i][j]
                     }
                 }
-                io.sockets.emit("get_the_profile",[data[0],user_info]);
+                io.sockets.emit("get_the_profile", [data[0], user_info]);
             }
         }
     })

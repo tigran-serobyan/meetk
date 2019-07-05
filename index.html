@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Meetk</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="the_code.js"></script>
-    <link rel="stylesheet" href="style/index.css">
+    <script src="./includings/the_code.js"></script>
+    <link rel="stylesheet" href="./style/index.css">
 </head>
 
 <body>
@@ -14,25 +14,25 @@
     <form>
         <div id="login">
             <label>Log in</label>
-            <input type="text" name="meetk-username" id="meetk-username">
-            <input type="password" name="meetk-password" id="meetk-password">
+            <input type="text" name="meetk-username" id="meetk-username" placeholder="Username">
+            <input type="password" name="meetk-password" id="meetk-password" placeholder="Password">
             <input type="button" value="Log in" id="lin-button" onclick="login_()" onmouseover="check_lin()">
             <a id="register-button">Register</a>
         </div>
         <div id="register">
             <label>Register</label>
-            <input type="text" name="name" id="name" oninput="check('name')">
-            <input type="text" name="surname" id="surname" oninput="check('surname')">
-            <input type="text" name="reg-username" id="reg-username" oninput="check('reg-username')">
+            <input type="text" name="name" id="name" oninput="check('name')" placeholder="Name">
+            <input type="text" name="surname" id="surname" oninput="check('surname')" placeholder="Surname">
+            <input type="text" name="reg-username" id="reg-username" oninput="check('reg-username')" placeholder="Username">
             <input type="password" name="reg-pass" id="reg-pass" oninput="check('reg-pass')"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="New password">
             <div id="pass-message">
                 <h3>Password must contain the following:</h3>
                 <p id="capital" class="invalid">A capital (uppercase) letter</p>
                 <p id="number" class="invalid">A number</p>
                 <p id="length" class="invalid">Minimum 6 characters</p>
             </div>
-            <input type="password" name="reg-pass-repeat" id="reg-pass-repeat" oninput="check('reg-pass-repeat')">
+            <input type="password" name="reg-pass-repeat" id="reg-pass-repeat" oninput="check('reg-pass-repeat')" placeholder="Repeat password">
             <select id="day" oninput="check('day')"></select>
             <select id="month" oninput="check('day')">
                 <option value="January">January</option>
@@ -70,6 +70,7 @@
             <a id="login-button">Log in</a>
         </div>
     </form>
+    <script src="./includings/connect_and_get_ip.js"></script>
     <script src="index.js"></script>
 </body>
 

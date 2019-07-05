@@ -50,12 +50,12 @@ input:focus{
 #top-image{
     background-size: cover;
     width: 100%;
-    height: 600px;
+    min-height: 600px;
     text-align: center;
 }
 #gray{
     width: 100%;
-    height: 600px;
+    min-height: 600px;
     display: inline-block;
     padding: 100px 0px 0px;
     box-sizing: border-box;
@@ -80,30 +80,60 @@ input:focus{
     margin: 30px;
     display: inline-block;
 }
+#list{
+    width: 100%; 
+}
+.quiz{
+    display: inline-block;
+    width: 22%;
+    margin: 1%;
+    height: 210px;
+    box-sizing: border-box;
+    color:white;
+    border-radius: 25px;
+    background-size: cover;
+    position: relative;
+    background-size: cover;
+}
+.gray{
+    width: 100%;
+    height: 200px;
+    display: inline-block;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,0.6);
+    border-radius: 25px;
+    overflow-y: scroll;
+}
+::-webkit-scrollbar { 
+    display: none; 
+}
 .today{
     display: inline-block;
-    margin-left: 20px;
-    text-decoration: none;
     color: white;
-    background: #006622;
-    padding: 10px;
+    border: solid 5px #006622;
     font-size: 20px;
 }
 .past{
     display: inline-block;
-    margin-left: 20px;
-    text-decoration: none;
     color: white;
-    background: #cc8800;
-    padding: 10px;
+    border: solid 5px #cc8800;
     font-size: 20px;
 }
 .soon{
     display: inline-block;
-    margin-left: 20px;
-    text-decoration: none;
     color: white;
-    background: #333;
-    padding: 10px;
+    border: solid 5px #333;
     font-size: 20px;
+    border-radius: 30px;
+}
+.open{
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 2%;
+    padding: 3%;
+    color: white;
+    border: solid 2px white;
+    background: rgba(0,0,0,0.3);
+    cursor: pointer;
 }

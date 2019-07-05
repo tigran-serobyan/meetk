@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <title>Meetk</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="the_code.js"></script>
-    <link rel="stylesheet" href="style/event.css">
+    <script src="../includings/the_code.js"></script>
+    <link rel="stylesheet" href="../style/event.css">
+    <link rel="stylesheet" href="../style/loading.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
+    <div id="loading" w3-include-html="../includings/loading.html"></div>
     <div id="top-image">
         <div id="gray">
             <h1 id="title"></h1>
@@ -20,9 +22,11 @@
     </div>
     <div id="list">
     </div>
-    <div id="top-bar" w3-include-html="top-bar-no-search.html"></div>
-    <script src="include.js"></script>
+    <div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
+    <script src="../includings/include.js"></script>
+    <script src="../includings/connect_and_get_ip.js"></script>
     <script src="event.js"></script>
+    <script src="../includings/openprofile.js"></script>
 </body>
 
 </html>

@@ -6,24 +6,25 @@
 <span id="top-buttons-span">
     <ul class="top-bar-menu">
         <li id="add-top-button">
-            Add
+            My stuff
             <div class="dropdown">
-                <a id="new-event-top-button" href="newevent">New event</a>
-                <a id="new-quiz-top-button" href="newquiz">New quiz</a>
+                <a id="new-event-top-button" href="../newevent">New event</a>
+                <a id="new-quiz-top-button" href="../newquiz">New quiz</a>
+                <a id="new-quiz-top-button" href="../myworks">My works</a>
             </div>
         </li>
         <li id="events-top-button">
-            Events
+            Play
             <div class="dropdown">
-                <a id="all-event-top-button" href="./home">Events</a>
+                <a id="all-event-top-button" href="../home">Events</a>
                 <a id="real-time-top-button">Real time</a>
             </div>
         </li>
         <li id="profile-top-button">
             Profile
             <div class="dropdown">
-                <a id="my-profile-top-button">My profile</a>
-                <a id="settings-event-top-button">Settings</a>
+                <a id="my-profile-top-button" onclick="myprofile()">My profile</a>
+                <a id="settings-event-top-button" href="../settings">Settings</a>
                 <a id="log-out-top-button" onclick="logout()">Log out</a>
             </div>
         </li>

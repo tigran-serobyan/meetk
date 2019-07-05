@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <script src="/socket.io/socket.io.js"></script>
     <title>Profile</title>
-    <script src="the_code.js"></script>
-    <link rel="stylesheet" href="style/profile.css">
+    <script src="../includings/the_code.js"></script>
+    <link rel="stylesheet" href="../style/profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -24,9 +24,11 @@
     <div id="events">
         <h3 id="events-title">Events</h3>
     </div>
-    <div id="top-bar" w3-include-html="top-bar-no-search.html"></div>
-    <script src="include.js"></script>
+    <div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
+    <script src="../includings/include.js"></script>
+    <script src="../includings/connect_and_get_ip.js"></script>
     <script src="profile.js"></script>
+    <script src="../includings/openprofile.js"></script>
 </body>
 
 </html>

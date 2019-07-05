@@ -59,6 +59,9 @@ input{
     border-radius: 5px;
     color: #222;
 }
+a{
+    font-size: 20px;
+}
 #register input{
     color: white;
 }
@@ -231,33 +234,44 @@ option:hover{
 input:focus{
     outline: none;
 }
-@media only screen and (max-width: 1000px){
+@media only screen and (max-width: 980px){
     body{
         background-size: cover;
+        background-attachment: fixed;
     } 
     h1{
         width: 100%;
-        margin: 0px;
+        margin: 150px 0px;
         font-size: 180px;
     }
     #register, #login{
         text-align: center;
-        top: 0px;
         width: 100%;
+        height: unset;
+        
         position: unset;
+    }
+    label{
+        margin-bottom: 150px;
+        font-size: 130px;
     }
     input{
         font-size: 60px;
+        padding: 20px;
+        margin-top: 30px;
     }
     input[type = button]{
-        margin-top: 30px;
+        margin-top: 80px;
         margin-bottom: 20px;
         margin-left: 30%;
         width: 40%;
         font-size: 70px;
     }
-    label{
-        font-size: 150px;
+    #day, #month, #year{
+        font-size: 60px;
+    }
+    a{
+        font-size: 50px;
     }
     #reg-pass{
         position: relative;

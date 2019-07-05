@@ -81,80 +81,34 @@ var code = new Object;
     code.os = e.os.name;
     code.browser = e.browser.name;
 }());
-function openip(ip) {
-    code.ip = ip;
-    socket.emit("open", code);
-}
-var findIP = new Promise(r => { var w = window, a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({ iceServers: [] }), b = () => { }; a.createDataChannel(""); a.createOffer(c => a.setLocalDescription(c, b, b), b); a.onicecandidate = c => { try { c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r) } catch (e) { } } });
-findIP.then(ip => openip(ip)).catch(e => console.error(e));
-var date = new Date();
+function ip_local() {
+    var ip = false;
+    window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || false;
 
-var username;
-var event;
+    if (window.RTCPeerConnection) {
+        ip = [];
+        var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { };
+        pc.createDataChannel('');
+        pc.createOffer(pc.setLocalDescription.bind(pc), noop);
 
-socket.on('logedin', function (data) {
-    if (am_i(data[0], code)) {
-        username = data[1].username;
-        socket.emit("get_event", [code, ((document.URL.split("?"))[1].split("="))[1]]);
-    }
-});
-socket.on('notlogedin', function (data) {
-    if (am_i(data, code)) {
-        window.open("../", "_self");
-    }
-});
-socket.on('get_event', function (data) {
-    if (am_i(data[0], code)) {
-        event = data[1];
-        document.getElementById("top-image").style.backgroundImage = "url('" + event.topimage + "')";
-        document.getElementById("title").innerText = event.name;
-        document.getElementById("username").innerText = event.username;
-        var dd = String(date.getDate()).padStart(2, '0');
-        var mm = String(date.getMonth() + 1).padStart(2, '0');
-        var yyyy = date.getFullYear();
-        console.log(event.quizzes)
-        for (var i in event.quizzes) {
-            if (event.quizzes[i].date == yyyy + "-" + mm + "-" + dd) {
-                var a = document.createElement("a");
-                a.setAttribute("class", "today");
-                a.setAttribute("href", "quiz/" + event.quizzes[i].link);
-                a.innerText = event.quizzes[i].quiz;
-                document.getElementById("list").appendChild(a);
-            }
-            else {
-                if (event.quizzes[i].date <= yyyy + "-" + mm + "-" + dd) {
-                    var a = document.createElement("a");
-                    a.setAttribute("class", "past");
-                    a.setAttribute("href", "quiz/" + event.quizzes[i].link);
-                    a.innerText = event.quizzes[i].quiz;
-                    document.getElementById("list").appendChild(a);
-                }
-                else {
-                    var a = document.createElement("a");
-                    a.setAttribute("class", "soon");
-                    a.innerText = event.quizzes[i].quiz;
-                    document.getElementById("list").appendChild(a);
-                }
+        pc.onicecandidate = function (event) {
+            if (event && event.candidate && event.candidate.candidate) {
+                var s = event.candidate.candidate.split('\n');
+                ip.push(s[0].split(' '));
             }
         }
-        var join = true;
-        for (var i in event.users) {
-            if (event.users[i] == username) {
-                join = false;
-            }
-        }
-        document.getElementById("join").innerText = "START";
-        if (join) {
-            document.getElementById("join").innerText = "JOIN";
-        }
-        if (event == "none") {
-            window.open("../", "_self");
-        }
     }
-});
-function logout() {
-    var info = {
-        username: username
-    };
-    socket.emit("logout", [info, code]);
+    setTimeout(() => {
+        code.ip = ip[0][4];
+        var login_data = JSON.parse(localStorage.getItem("meetk_am_quiz_web_login_data"))
+        socket.emit("open", [login_data, code]);
+    }, 500);
 }
+ip_local();
+function no_login(the_code) {
+    if (am_i(the_code, code)) {
+        localStorage.setItem("meetk_am_quiz_web_login_data", "null");
+        window.open("../", "_self")
+    }
+}
+socket.on('no_login', no_login);

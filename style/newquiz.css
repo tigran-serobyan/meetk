@@ -250,6 +250,19 @@ input:focus, input:hover{
     color: white;
     transition: 0.5s;
 }
+.delete{
+    text-align: center;
+    display: inline-block;
+    padding: 10px 30px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    border: solid 2px #aa3300;
+    border-radius: 10px;
+    background: #aa3300;
+    color: white;
+    transition: 0.5s;
+}
 .publish:hover{
     background: #006622;
     border: solid 2px #006622;
@@ -257,6 +270,10 @@ input:focus, input:hover{
 .save:hover{
     background: #006622;
     border: solid 2px #006622;
+}
+.delete:hover{
+    background: #990000;
+    border: solid 2px #990000;
 }
 #questions{
     padding: 0px 20px;

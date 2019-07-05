@@ -1,98 +1,12 @@
-var socket = io.connect(document.URL.split('/'));
-var code = new Object;
-(function () {
-    'use strict';
-
-    var module = {
-        options: [],
-        header: [navigator.platform, navigator.userAgent, navigator.appVersion, navigator.vendor, window.opera],
-        dataos: [
-            { name: 'Windows Phone', value: 'Windows Phone', version: 'OS' },
-            { name: 'Windows', value: 'Win', version: 'NT' },
-            { name: 'iPhone', value: 'iPhone', version: 'OS' },
-            { name: 'iPad', value: 'iPad', version: 'OS' },
-            { name: 'Kindle', value: 'Silk', version: 'Silk' },
-            { name: 'Android', value: 'Android', version: 'Android' },
-            { name: 'PlayBook', value: 'PlayBook', version: 'OS' },
-            { name: 'BlackBerry', value: 'BlackBerry', version: '/' },
-            { name: 'Macintosh', value: 'Mac', version: 'OS X' },
-            { name: 'Linux', value: 'Linux', version: 'rv' },
-            { name: 'Palm', value: 'Palm', version: 'PalmOS' }
-        ],
-        databrowser: [
-            { name: 'Chrome', value: 'Chrome', version: 'Chrome' },
-            { name: 'Firefox', value: 'Firefox', version: 'Firefox' },
-            { name: 'Safari', value: 'Safari', version: 'Version' },
-            { name: 'Internet Explorer', value: 'MSIE', version: 'MSIE' },
-            { name: 'Opera', value: 'Opera', version: 'Opera' },
-            { name: 'BlackBerry', value: 'CLDC', version: 'CLDC' },
-            { name: 'Mozilla', value: 'Mozilla', version: 'Mozilla' }
-        ],
-        init: function () {
-            var agent = this.header.join(' '),
-                os = this.matchItem(agent, this.dataos),
-                browser = this.matchItem(agent, this.databrowser);
-
-            return { os: os, browser: browser };
-        },
-        matchItem: function (string, data) {
-            var i = 0,
-                j = 0,
-                html = '',
-                regex,
-                regexv,
-                match,
-                matches,
-                version;
-
-            for (i = 0; i < data.length; i += 1) {
-                regex = new RegExp(data[i].value, 'i');
-                match = regex.test(string);
-                if (match) {
-                    regexv = new RegExp(data[i].version + '[- /:;]([\\d._]+)', 'i');
-                    matches = string.match(regexv);
-                    version = '';
-                    if (matches) { if (matches[1]) { matches = matches[1]; } }
-                    if (matches) {
-                        matches = matches.split(/[._]+/);
-                        for (j = 0; j < matches.length; j += 1) {
-                            if (j === 0) {
-                                version += matches[j] + '.';
-                            } else {
-                                version += matches[j];
-                            }
-                        }
-                    } else {
-                        version = '0';
-                    }
-                    return {
-                        name: data[i].name,
-                        version: parseFloat(version)
-                    };
-                }
-            }
-            return { name: 'unknown', version: 0 };
-        }
-    };
-
-    var e = module.init(),
-        debug = '';
-
-    code.os = e.os.name;
-    code.browser = e.browser.name;
-}());
-function openip(ip) {
-    code.ip = ip;
-    socket.emit("open", code);
-}
-var findIP = new Promise(r => { var w = window, a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({ iceServers: [] }), b = () => { }; a.createDataChannel(""); a.createOffer(c => a.setLocalDescription(c, b, b), b); a.onicecandidate = c => { try { c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r) } catch (e) { } } });
-findIP.then(ip => openip(ip)).catch(e => console.error(e));
-var date = new Date();
 var username;
-var id = date.getFullYear() + "" + date.getUTCDate() + "" + date.getDay() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds() + "" + date.getMilliseconds()
+var date = new Date();
+var id = date.getFullYear() + "" + date.getUTCMonth() + "" + date.getUTCMonth() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds() + "" + date.getMilliseconds()
 socket.on('logedin', function (data) {
     if (am_i(data[0], code)) {
         username = data[1].username;
+        if (((document.URL.split("?")[1]))) {
+            socket.emit("get_quiz", [code, ((document.URL.split("?"))[1].split("="))[1]]);
+        }
     }
 });
 socket.on('notlogedin', function (data) {
@@ -100,7 +14,59 @@ socket.on('notlogedin', function (data) {
         window.open("../", "_self");
     }
 });
-
+socket.on('get_quiz', function (data) {
+    if (am_i(data[0], code)) {
+        var quiz_info = data[1];
+        if (quiz_info == "none") {
+            window.open("../", "_self");
+        }
+        if (username != quiz_info.username) {
+            window.open("../", "_self");
+        }
+        document.getElementById("title").value = quiz_info.title;
+        document.getElementById("subtitle").value = quiz_info.subtitle;
+        document.getElementById("start").value = quiz_info.start;
+        if (quiz_info.topimage) {
+            document.getElementById("top-img").src = quiz_info.topimage;
+        }
+        if (quiz_info.end_image) {
+            document.getElementById("end_img").style.backgroundImage = quiz_info.end_image;
+        }
+        document.getElementById("end_youhave").innerText = quiz_info.end_youhave;
+        document.getElementById("end_thepoints").innerText = quiz_info.end_thepoints;
+        id = quiz_info.id;
+        the_type = quiz_info.type;
+        for (var i in document.getElementsByClassName("timer")) {
+            if (quiz_info.timer == document.getElementsByClassName("timer")[i].innerText) {
+                for (var j = 0; j < document.getElementsByClassName("timer").length; j++) {
+                    document.getElementsByClassName("timer")[j].setAttribute("class", "timer");
+                }
+                document.getElementsByClassName("timer")[i].setAttribute("class", "timer timer-checked");
+            }
+        }
+        for (var i in quiz_info.questions) {
+            add(quiz_info.questions[i].type);
+            var question = document.getElementsByClassName('question')[i];
+            if (quiz_info.questions[i].image) {
+                question.getElementsByClassName("img")[0].style.backgroundImage = "url('" + quiz_info.questions[i].image + "')";
+            }
+            if (quiz_info.questions[i].type != 'text') {
+                question.getElementsByClassName("question_input")[0].value = quiz_info.questions[i].question;
+                if (quiz_info.questions[i].type != 'typing') {
+                    for (var j in quiz_info.questions[i].answer) {
+                        question.getElementsByClassName("answer_button")[j].value = quiz_info.questions[i].answer[j].text;
+                        if (quiz_info.questions[i].answer[j].true) {
+                            is_true(question.getElementsByClassName("answer_button")[j], j)
+                        }
+                    }
+                }
+                else {
+                    question.getElementsByClassName("answer_input")[0].value = quiz_info.questions[i].answer;
+                }
+            }
+        }
+    }
+});
 var id_num = 1;
 function is_true(a, c) {
     question = a.parentElement;
@@ -354,8 +320,9 @@ function save() {
         document.getElementsByClassName("publish")[0].innerText = "Published";
     }
     last_save = 0;
-    save_text();
+    document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
 }
+save_text();
 var the_type = "draft";
 save();
 function logout() {
@@ -363,4 +330,12 @@ function logout() {
         username: username
     };
     socket.emit("logout", [info, code]);
+}
+function deleteQuiz() {
+    var info = {
+        id: id,
+        type: "deleted",
+    }
+    socket.emit("save_quiz", info);
+    window.open("./myworks.html", "_self");
 }

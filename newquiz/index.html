@@ -5,18 +5,19 @@
     <meta charset="UTF-8">
     <title>Add new quiz</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="the_code.js"></script>
-    <link rel="stylesheet" href="style/newquiz.css">
+    <script src="../includings/the_code.js"></script>
+    <link rel="stylesheet" href="../style/newquiz.css">
 </head>
 
 <body>
+    <div id="loading" w3-include-html="../includings/loading.html"></div>
     <form>
         <div id="top">
             <input type="text" id="title" placeholder="Title">
             <input type="text" id="subtitle" placeholder="Subtitle">
             <input type="text" id="start" value="START">
             <input type="file" onchange="encodeImageFileAsURL(this,0)" name="file" id="top-img-input"
-                accept="image/x-png,image/jpeg">
+                accept="image/x-png,image/jpeg,image/gif">
             <img src="" id="top-img">
         </div>
         <div id="questions">
@@ -61,12 +62,15 @@
             <div id="save">
                 <p class="publish" onmouseover="check_publish()" onclick="publish() "> Publish </p>
                 <p class="save" onclick="save()"> Not saved </p>
+                <p class="delete" onclick="deleteQuiz()"> Delete </p>
             </div>
         </div>
     </form>
-    <div id="top-bar" w3-include-html="top-bar-no-search.html"></div>
-    <script src="include.js"></script>
+    <div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
+    <script src="../includings/include.js"></script>
+    <script src="../includings/connect_and_get_ip.js"></script>
     <script src="newquiz.js"></script>
+    <script src="../includings/openprofile.js"></script>
 </body>
 
 </html>
