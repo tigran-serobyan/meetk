@@ -36,34 +36,34 @@ var url = ip.address();
 var date = new Date();
 app.use(express.static("."));
 app.get('/', function (req, res) {
-    res.redirect('/index.html');
+    res.redirect('./');
 });
 app.get('/home', function (req, res) {
-    res.redirect('/home');
+    res.redirect('./home');
 });
 app.get('/event/:eventlink', function (req, res) {
-    res.redirect('/event/?id=' + req.params.eventlink);
+    res.redirect('./event?id=' + req.params.eventlink);
 });
 app.get('/newquiz', function (req, res) {
-    res.redirect('/newquiz');
+    res.redirect('./newquiz');
 });
 app.get('/newquiz/:link', function (req, res) {
-    res.redirect('/newquiz/?id=' + req.params.link);
+    res.redirect('./newquiz?id=' + req.params.link);
 });
 app.get('/newevent/', function (req, res) {
-    res.redirect('/newevent');
+    res.redirect('./newevent');
 });
 app.get('/newevent/:link', function (req, res) {
-    res.redirect('/newevent/?id=' + req.params.link);
+    res.redirect('./newevent?id=' + req.params.link);
 });
 app.get('/myworks', function (req, res) {
-    res.redirect('/myworks');
+    res.redirect('./myworks');
 });
 app.get('/profile/:username', function (req, res) {
-    res.redirect('/profile/?username=' + req.params.username);
+    res.redirect('./profile?username=' + req.params.username);
 });
 app.get('/settings', function (req, res) {
-    res.redirect('/settings');
+    res.redirect('./settings');
 });
 app.get('*', function (req, res) {
     res.redirect('../page-not-found');

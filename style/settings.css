@@ -1,3 +1,14 @@
+*{
+    transition: 0.5s;
+}
+input:focus{
+    outline: none;
+}
+input:hover{
+    background: rgba(150,150,150,0.2);
+    border-color: #acacac;
+    color: #acacac;
+}
 a{
     text-decoration: none;
 }
@@ -51,8 +62,8 @@ body{
     display: inline-grid;
     border-radius: 50%;
     border: solid 5px #ffffff;
-    background-size: cover;
     box-shadow: 0px 0px 20px black;
+    background-size: 100%; 
 }
 #top{
     background-size: cover;
@@ -74,10 +85,20 @@ body{
     text-shadow: 2px 2px 10px black;
 }
 #coverInput{
-    display: block;
+    display: inline-block;
     margin: 10px;
     padding: 20px;
-    width: 190px;
+    width: 60%;
+}
+#save{
+    display: inline-block;
+    margin: 10px;
+    padding: 20px;
+    width: 30%;
+    font-size: 20px;
+}
+#save:hover{
+    background: #006633;
 }
 #coverInput::after{
     content: "Click to select cover photo";
@@ -109,8 +130,8 @@ input[type='file']{
     font-size: 0px;
 }
 #profile_image::after{
-    margin: 5%;
-    padding: 25%;
+    margin: 7%;
+    padding: 32% 20%;
     box-sizing: border-box;
     content: "Click to select profile photo";
     font-size: 20px;

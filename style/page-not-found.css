@@ -1,7 +1,7 @@
 .error404{
     margin: 5% -8px;
     text-align: center;
-    font-family: 'Bahianita', cursive;
+    font-family: 'Dosis', sans-serif;
     font-size: 50px;
     position: absolute;
     width: 100%;
@@ -18,6 +18,36 @@
 }
 .error404 strong:nth-child(even){
     animation: zoom-out-in 1s ease-in-out infinite;
+}
+.errornumbers{
+    color: red; 
+}
+.pagenotfound{
+    margin: 10% -8px;
+    text-align: center;
+    font-family: 'Dosis', sans-serif;
+    font-size: 50px;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+.pagenotfound strong{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+.pagenotfound strong:nth-child(odd){
+    animation: zoom-in-out 1s ease-in-out infinite;
+}
+.pagenotfound strong:nth-child(even){
+    animation: zoom-out-in 1s ease-in-out infinite;
+}
+a{
+    color: white;
+    text-decoration: none;
+    font-size: 50px;
+    font-family: 'Dosis', sans-serif;
 }
 @keyframes zoom-in-out{
     0% {font-size: 50px}
@@ -41,58 +71,40 @@ ul li{
     display: inline-block;
     position: fixed;
     z-index: -1;
+    transform-origin: center;
+    border-radius: 40%;
 }
 ul li:nth-child(1){
-    padding: 20px;
-    animation: go-up 5s linear infinite;
-    background: #ececec;
-    left: 0%;
+    padding: 4000px;
+    animation: go-up 24s linear infinite;
+    background: #fa2c2a88;
+    left: -115%;
 }
 ul li:nth-child(2){
-    padding: 30px;
-    animation: go-up 5s linear infinite;
-    left: 10%;
+    padding: 4000px;
+    animation: go-up 23s linear infinite;
+    background: #faba2a88;
+    left: -75.5%;
 }
 ul li:nth-child(3){
-    padding: 20px;
-    animation: go-up 5s linear infinite;
-    background: #ececec;
-    left: 20%;
+    padding: 4000px;
+    animation: go-up 22s linear infinite;
+    background: #fafa2a88;
+    left: -30%;
 }
 ul li:nth-child(4){
-    padding: 30px;
-    animation: go-up 5s linear infinite;
-    left: 30%;
+    padding: 4000px;
+    animation: go-up 21s linear infinite;
+    background: #2aca2a88;
+    left: 12.5%;
 }
 ul li:nth-child(5){
-    padding: 30px;
-    animation: go-up 5s linear infinite;
-    left: 40%;
-}
-ul li:nth-child(1){
-    padding: 20px;
-    animation: go-up 5s linear infinite;
-    background: #ececec;
-    left: 50%;
-}
-ul li:nth-child(2){
-    padding: 30px;
-    animation: go-up 5s linear infinite;
-}
-ul li:nth-child(3){
-    padding: 20px;
-    animation: go-up 5s linear infinite;
-    background: #ececec;
-}
-ul li:nth-child(4){
-    padding: 30px;
-    animation: go-up 5s linear infinite;
-}
-ul li:nth-child(5){
-    padding: 30px;
-    animation: go-up 5s linear infinite;
+    padding: 4000px;
+    animation: go-up 20s linear infinite;
+    background: #2aaafa88;
+    left: 55%;
 }
 @keyframes go-up{
-    0% { top: 100%}
-    100% { top: -100%;}
+    0% { top: -150%; transform: rotate(0deg);}
+    100% { top: -150%; transform: rotate(360deg);}
 }

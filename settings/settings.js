@@ -20,21 +20,21 @@ socket.on('get_the_profile', function (data) {
         document.getElementById("username").innerText = "@" + data[1].username;
         document.getElementById("location").innerText = data[1].location;
         if (data[1].pic) {
-            document.getElementById("profile_image").style.background = "url('" + data[1].pic + "')";
+            document.getElementById("profile_image").style.backgroundImage = "url('" + data[1].pic + "')";
         }
         else {
             if (data[1].gender == "male") {
-                document.getElementById("profile_image").src = "style/male.jpg";
+                document.getElementById("profile_image").style.backgroundImage = "url('../style/male.jpg')";
             }
             else {
-                document.getElementById("profile_image").src = "style/female.jpg";
+                document.getElementById("profile_image").style.backgroundImage = "url('../style/female.jpg')";
             }
         }
         if (data[1].backpic) {
             document.getElementById("top").style.backgroundImage = "url('" + data[1].backpic + "')";
         }
         else {
-            document.getElementById("top").style.backgroundImage = "url('style/profile_background.png')";
+            document.getElementById("top").style.backgroundImage = "url('../style/profile_background.png')";
         }
     }
 });

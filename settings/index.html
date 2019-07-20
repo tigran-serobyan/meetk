@@ -19,8 +19,11 @@
                 <h2 id="username"> </h2>
                 <h3 id="location"> </h3>
             </span>
-            <input type="file" id="coverInput" accept="image/x-png,image/jpeg"
-                onchange="encodeImageFileAsURL(this, this.parentElement.parentElement)">
+            <div>
+                <input type="file" id="coverInput" accept="image/x-png,image/jpeg"
+                    onchange="encodeImageFileAsURL(this, this.parentElement.parentElement)">
+                <input type="button" value="Save" id="save">
+            </div>
         </span>
     </div>
     <div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
