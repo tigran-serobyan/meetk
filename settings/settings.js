@@ -23,7 +23,7 @@ socket.on('get_the_profile', function (data) {
             document.getElementById("profile_image").style.backgroundImage = "url('" + data[1].pic + "')";
         }
         else {
-            if (data[1].gender == "male") {
+            if (data[1].gender == "Male") {
                 document.getElementById("profile_image").style.backgroundImage = "url('../style/male.jpg')";
             }
             else {

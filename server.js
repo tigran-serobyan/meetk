@@ -4,6 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var ip = require('ip');
 var fs = require('fs-extra');
+
 var usersJson = fs.readJsonSync('./json/users.json');
 if (usersJson.users) {
     var users = usersJson.users;
@@ -42,25 +43,35 @@ app.get('/home', function (req, res) {
     res.redirect('./home');
 });
 app.get('/event/:eventlink', function (req, res) {
-    res.redirect('./event?id=' + req.params.eventlink);
+    res.redirect('../event?id=' + req.params.eventlink);
 });
 app.get('/newquiz', function (req, res) {
     res.redirect('./newquiz');
 });
 app.get('/newquiz/:link', function (req, res) {
-    res.redirect('./newquiz?id=' + req.params.link);
+    res.redirect('../newquiz?id=' + req.params.link);
 });
 app.get('/newevent/', function (req, res) {
     res.redirect('./newevent');
 });
 app.get('/newevent/:link', function (req, res) {
-    res.redirect('./newevent?id=' + req.params.link);
+    res.redirect('../newevent?id=' + req.params.link);
 });
 app.get('/myworks', function (req, res) {
     res.redirect('./myworks');
 });
 app.get('/profile/:username', function (req, res) {
-    res.redirect('./profile?username=' + req.params.username);
+    let profile = false
+    for (let i in users) {
+        if (users[i].username == req.params.username) {
+            profile = true;
+            res.redirect('../profile?username=' + req.params.username);
+            break;
+        }
+    }
+    if (!profile) {
+        res.redirect('../page-not-found');
+    }
 });
 app.get('/settings', function (req, res) {
     res.redirect('./settings');
@@ -70,13 +81,6 @@ app.get('*', function (req, res) {
 });
 server.listen(3000);
 function saveDataOnJson() {
-    for (var i in events) {
-        if (events[i].type == "published") {
-            if (events[i].end < date.getUTCFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getUTCDate()).slice(-2)) {
-                events[i].type = "ended";
-            }
-        }
-    }
     fs.writeJson('./json/events.json', { "data": events }, err => {
         if (err) return console.error(err);
     });
@@ -90,11 +94,23 @@ function saveDataOnJson() {
         if (err) return console.error(err);
     });
     console.log("All Info saved in json files");
-    setTimeout(() => {
-        saveDataOnJson();
-    }, 120000);
 }
-saveDataOnJson();
+function updateEventsStatus() {
+    for (var i in events) {
+        if (events[i].type == "published") {
+            if (events[i].end < date.getUTCFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getUTCDate()).slice(-2)) {
+                events[i].type = "ended";
+            }
+        }
+    }
+}
+
+setInterval(() => {
+    updateEventsStatus();
+}, 120000);
+setInterval(() => {
+    saveDataOnJson();
+}, 600000);
 io.on('connection', function (socket) {
     socket.on("open", function (data) {
         let info = data[0];
@@ -140,8 +156,14 @@ io.on('connection', function (socket) {
         }
         io.sockets.emit("get_events", [data, published_events]);
     })
-    socket.on("data", function (data) {
-        console.log(data)
+    socket.on("joinEvent", function (data) {
+        var code = data[0];
+        for (var i in events) {
+            if (events[i].id == data[2]) {
+                events[i].users.push(data[1]);
+                io.sockets.emit("joinEvent", code);
+            }
+        }
     })
     socket.on("register", function (data) {
         var info = data[0];
@@ -163,8 +185,8 @@ io.on('connection', function (socket) {
         var code = data[1];
         var username = false;
         for (var i in users) {
-            if (info.username == users[i].username && info.password == users[i].password) {
-                username = true;
+            if (info.username == users[i].username) {
+                username = info.password == users[i].password;
             }
         }
         if (username) {
@@ -243,19 +265,23 @@ io.on('connection', function (socket) {
     socket.on("get_my_works", function (data) {
         var the_quizzes = [];
         for (var i in quiz) {
-            if (quiz[i].username == data[1]) {
+            if (quiz[i].username == data[1] && quiz[i].type != 'deleted') {
                 the_quizzes.push(quiz[i]);
             }
         }
         var the_events = [];
         for (var i in events) {
-            if (events[i].username == data[1]) {
+            if (events[i].username == data[1] && events[i].type != 'deleted') {
                 the_events.push(events[i]);
             }
         }
         io.sockets.emit("get_my_works", [data[0], the_quizzes, the_events]);
     })
     socket.on("save_quiz", function (data) {
+        if (data.length > 1) {
+            var code = data[0];
+            var data = data[1];
+        }
         var newquiz = true;
         for (var i in quiz) {
             if (quiz[i].id == data.id) {
@@ -266,8 +292,15 @@ io.on('connection', function (socket) {
         if (newquiz) {
             quiz.push(data);
         }
+        if (data.type == 'deleted') {
+            io.sockets.emit('quiz_deleted', code);
+        }
     })
     socket.on("save_event", function (data) {
+        if (data.length > 1) {
+            var code = data[0];
+            var data = data[1];
+        }
         var newevent = true;
         for (var i in events) {
             if (events[i].id == data.id) {
@@ -278,8 +311,12 @@ io.on('connection', function (socket) {
         if (newevent) {
             events.push(data);
         }
+        if (data.type == 'deleted') {
+            io.sockets.emit('event_deleted', code);
+        }
     })
     socket.on("get_the_profile", function (data) {
+        let profile = false;
         for (var i in users) {
             if (users[i].username == data[1]) {
                 var user_info = {};
@@ -288,8 +325,12 @@ io.on('connection', function (socket) {
                         user_info[j] = users[i][j]
                     }
                 }
+                profile = true;
                 io.sockets.emit("get_the_profile", [data[0], user_info]);
             }
+        }
+        if (!profile) {
+            io.sockets.emit("get_the_profile", [data[0], {}]);
         }
     })
 });

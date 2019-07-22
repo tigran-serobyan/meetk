@@ -234,6 +234,25 @@ option:hover{
 input:focus{
     outline: none;
 }
+.show-password{
+    font-size: 30px;
+    position: absolute;
+    margin: 10px;
+    margin-left: -46px;
+    padding: 7px;
+    background: #fff;
+    border-radius: 3px;
+    color: #222;
+}
+.show-password-reg{
+    font-size: 30px;
+    position: absolute;
+    margin: 11px 0px 0px -55px;
+    padding: 6px;
+    background: #fff;
+    border-radius: 3px;
+    color: #222;
+}
 @media only screen and (max-width: 980px){
     body{
         background-size: cover;
@@ -241,37 +260,43 @@ input:focus{
     } 
     h1{
         width: 100%;
-        margin: 150px 0px;
-        font-size: 180px;
+        margin: 150px 20%;
+        font-size: 100px;
     }
     #register, #login{
         text-align: center;
-        width: 100%;
+        width: 140%;
         height: unset;
-        
         position: unset;
+        box-sizing: content-box;
     }
     label{
-        margin-bottom: 150px;
-        font-size: 130px;
+        margin-bottom: 80px;
+        font-size: 80px;
     }
     input{
-        font-size: 60px;
+        font-size: 30px;
         padding: 20px;
         margin-top: 30px;
+        width: 90%;
+    }
+    #name, #surname, #reg-pass, #reg-pass-repeat{
+        width: 40%;
+        margin-right:0%;
     }
     input[type = button]{
         margin-top: 80px;
         margin-bottom: 20px;
-        margin-left: 30%;
-        width: 40%;
-        font-size: 70px;
+        margin-left: 25%;
+        width: 50%;
+        font-size: 30px;
     }
     #day, #month, #year{
-        font-size: 60px;
+        font-size: 30px;
+        min-width: 26%;
     }
     a{
-        font-size: 50px;
+        font-size: 30px;
     }
     #reg-pass{
         position: relative;
@@ -283,17 +308,36 @@ input:focus{
         text-align: left
     }
     .container{
-        font-size: 40px;
+        font-size: 20px;
         padding-left: 42px;
     }
     .checkmark{
-        width: 41px;
-        height: 41px;
+        width: 31px;
+        height: 31px;
     }
     .container .checkmark::after{
-        top: 12px;
-        left: 12px;
-        width: 17px;
-        height: 17px;
+        top: 10px;
+        left: 10px;
+        width: 10px;
+        height: 10px;
+    }
+    .show-password{
+        font-size: 35px;
+        position: absolute;
+        margin: 32px;
+        margin-left: -71px;
+        padding: 17px;
+        background: #fff;
+        border-radius: 3px;
+        color: #222;
+    }
+    .show-password-reg{
+        font-size: 35px;
+        position: absolute;
+        margin: 32px 0px 0px -74px;
+        padding: 17px;
+        background: #fff;
+        border-radius: 3px;
+        color: #222;
     }
 }

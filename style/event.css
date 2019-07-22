@@ -137,3 +137,11 @@ input:focus{
     background: rgba(0,0,0,0.3);
     cursor: pointer;
 }
+.soon-button{
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 2%;
+    padding: 3%;
+    color: white;
+    cursor: default;
+}

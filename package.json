@@ -1,6 +1,7 @@
 {
   "name": "fs-extra",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "express": "^4.17.0",
     "extra": "^0.2.1",
     "fs": "0.0.1-security",
@@ -8,6 +9,7 @@
     "https": "^1.0.0",
     "image-to-rgba-matrix": "^1.0.0",
     "ip": "^1.1.5",
+    "password-hash": "^1.2.2",
     "socket.io": "^2.2.0"
   }
 }

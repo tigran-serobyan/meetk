@@ -37,7 +37,8 @@ socket.on('get_the_events', function (data) {
             document.getElementById("events").appendChild(bigdiv);
             var open_text = document.createElement("a");
             open_text.setAttribute("class", "open_button");
-            open_text.setAttribute("href", "event/" + events[i].link);
+            console.log( "../event/" + events[i].id);
+            open_text.setAttribute("href", "../event/" + events[i].id);
             open_text.onclick = function () { socket.emit("event", [code, (this.href.split("/"))[4]]) };
             open_text.innerText = "OPEN";
             div.appendChild(open_text);
@@ -46,6 +47,9 @@ socket.on('get_the_events', function (data) {
 });
 socket.on('get_the_profile', function (data) {
     if (am_i(data[0], code)) {
+        if(!data[1].username){
+            window.open('../page-not-found','_self');
+        }
         document.getElementById("name_surname").innerText = data[1].name + " " + data[1].surname;
         document.getElementById("username").innerText = "@" + data[1].username;
         document.getElementById("location").innerText = data[1].location;
@@ -53,7 +57,7 @@ socket.on('get_the_profile', function (data) {
             document.getElementById("profile_image").src = data[1].pic;
         }
         else {
-            if (data[1].gender == "male") {
+            if (data[1].gender == "Male") {
                 document.getElementById("profile_image").src = "../style/male.jpg";
             }
             else {

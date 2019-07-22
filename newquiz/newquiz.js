@@ -236,30 +236,35 @@ function publish() {
         save();
     }
 }
-var last_save = 0;
+var last_save = false;
 function save_text() {
-    if (last_save < 5) {
-        document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
-    }
-    else {
-        if (last_save <= 60) {
-            if (last_save % 5 == 0) {
-                document.getElementsByClassName("save")[0].innerText = "Last save: " + last_save + " seconds ago (click to save)";
-            }
+    if (last_save) {
+        if (last_save < 5) {
+            document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
         }
         else {
-            if (last_save <= 600) {
-                if (last_save % 60 == 0) {
-                    document.getElementsByClassName("save")[0].innerText = "Last save: " + Math.floor(last_save / 60) + " minutes ago (click to save)";
+            if (last_save <= 60) {
+                if (last_save % 5 == 0) {
+                    document.getElementsByClassName("save")[0].innerText = "Last save: " + last_save + " seconds ago (click to save)";
                 }
             }
             else {
-                document.getElementsByClassName("save")[0].innerText = "Last save: more than 10 minutes ago (click to save)";
-                save();
+                if (last_save <= 600) {
+                    if (last_save % 60 == 0) {
+                        document.getElementsByClassName("save")[0].innerText = "Last save: " + Math.floor(last_save / 60) + " minutes ago (click to save)";
+                    }
+                }
+                else {
+                    save();
+                    document.getElementsByClassName("save")[0].innerText = "Last save: more than 10 minutes ago (click to save)";
+                }
             }
         }
+        last_save++;
     }
-    last_save++;
+    else {
+        document.getElementsByClassName("save")[0].innerText = "Not saved yet (click to save)";
+    }
     setTimeout(() => {
         save_text();
     }, 1000);
@@ -319,12 +324,11 @@ function save() {
     if (the_type == "published") {
         document.getElementsByClassName("publish")[0].innerText = "Published";
     }
-    last_save = 0;
+    last_save = 1;
     document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
 }
 save_text();
 var the_type = "draft";
-save();
 function logout() {
     var info = {
         username: username
@@ -336,6 +340,6 @@ function deleteQuiz() {
         id: id,
         type: "deleted",
     }
-    socket.emit("save_quiz", info);
-    window.open("./myworks.html", "_self");
+    socket.emit("save_quiz", [code, info]);
 }
+socket.on("quiz_deleted", function () { window.open("../myworks", "_self"); });

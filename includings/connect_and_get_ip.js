@@ -81,33 +81,22 @@ var code = new Object;
     code.os = e.os.name;
     code.browser = e.browser.name;
 }());
-function ip_local() {
-    var ip = false;
-    window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || false;
-
-    if (window.RTCPeerConnection) {
-        ip = [];
-        var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { };
-        pc.createDataChannel('');
-        pc.createOffer(pc.setLocalDescription.bind(pc), noop);
-
-        pc.onicecandidate = function (event) {
-            if (event && event.candidate && event.candidate.candidate) {
-                var s = event.candidate.candidate.split('\n');
-                ip.push(s[0].split(' '));
-            }
-        }
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-\|";:?/.>,<քոեռտըւիօպասդֆգհյկլզղցվբնմՔՈԵՌՏԸՒԻՕՊԱՍԴՖԳՀՅԿԼԶՂՑՎԲՆՄէթփձջւևրչճժԷԹՓՁՋՒևՐՉՃԺԽԾխծշՇ';
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    setTimeout(() => {
-        code.ip = ip[0][4];
-        var login_data = JSON.parse(localStorage.getItem("meetk_am_quiz_web_login_data"))
-        socket.emit("open", [login_data, code]);
-    }, 500);
+    return result;
 }
-ip_local();
+code.code = makeid(42);
+
+var username = JSON.parse(localStorage.getItem("meetk_username"));
+var password = JSON.parse(localStorage.getItem("meetk_password"));
+socket.emit("open", [{ username, password }, code]);
 function no_login(the_code) {
     if (am_i(the_code, code)) {
-        localStorage.setItem("meetk_am_quiz_web_login_data", "null");
+        localStorage.clear();
         window.open("../", "_self")
     }
 }

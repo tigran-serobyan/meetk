@@ -27,7 +27,8 @@ function logedin(data) {
             "username": document.getElementById("meetk-username").value,
             "password": document.getElementById("meetk-password").value
         };
-        localStorage.setItem("meetk_am_quiz_web_login_data", JSON.stringify(info));
+        localStorage.setItem("meetk_username", JSON.stringify(info.username));
+        localStorage.setItem("meetk_password", JSON.stringify(info.password));
         window.open("/home", "_self");
     }
 }
@@ -343,4 +344,12 @@ document.getElementById("register-button").onclick = register;
 var year = new Date().getFullYear();
 for (var i = year - 5; i >= year - 120; i--) {
     document.getElementById("year").innerHTML += '<option value="' + i + '">' + i + '</option>';
+}
+showPassword = function (id) {
+    if (document.getElementById(id).type == 'password') {
+        document.getElementById(id).type = 'text';
+    }
+    else {
+        document.getElementById(id).type = 'password';
+    }
 }

@@ -37,7 +37,12 @@ socket.on('get_event', function (data) {
         for (var i in event_info.quizzes) {
             add();
             document.getElementsByClassName("calendar")[document.getElementsByClassName("calendar").length - 1].value = event_info.quizzes[i].date;
-            document.getElementsByClassName("quizzes")[document.getElementsByClassName("quizzes").length - 1].value = event_info.quizzes[i].quiz;
+
+            for (var j of document.getElementsByClassName("quizzes")[document.getElementsByClassName("quizzes").length - 1].getElementsByTagName("option")) {
+                if (j.innerText == event_info.quizzes[i].quiz) {
+                    document.getElementsByClassName("quizzes")[document.getElementsByClassName("quizzes").length - 1].value = j.value;
+                }
+            }
         }
         id = event_info.id;
         the_type = event_info.type
@@ -103,30 +108,35 @@ function publish() {
         save();
     }
 }
-var last_save = 0;
+var last_save = false;
 function save_text() {
-    if (last_save < 5) {
-        document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
-    }
-    else {
-        if (last_save <= 60) {
-            if (last_save % 5 == 0) {
-                document.getElementsByClassName("save")[0].innerText = "Last save: " + last_save + " seconds ago (click to save)";
-            }
+    if (last_save) {
+        if (last_save < 5) {
+            document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
         }
         else {
-            if (last_save <= 600) {
-                if (last_save % 60 == 0) {
-                    document.getElementsByClassName("save")[0].innerText = "Last save: " + Math.floor(last_save / 60) + " minutes ago (click to save)";
+            if (last_save <= 60) {
+                if (last_save % 5 == 0) {
+                    document.getElementsByClassName("save")[0].innerText = "Last save: " + last_save + " seconds ago (click to save)";
                 }
             }
             else {
-                save();
-                document.getElementsByClassName("save")[0].innerText = "Last save: more than 10 minutes ago (click to save)";
+                if (last_save <= 600) {
+                    if (last_save % 60 == 0) {
+                        document.getElementsByClassName("save")[0].innerText = "Last save: " + Math.floor(last_save / 60) + " minutes ago (click to save)";
+                    }
+                }
+                else {
+                    save();
+                    document.getElementsByClassName("save")[0].innerText = "Last save: more than 10 minutes ago (click to save)";
+                }
             }
         }
+        last_save++;
     }
-    last_save++;
+    else {
+        document.getElementsByClassName("save")[0].innerText = "Not saved yet (click to save)";
+    }
     setTimeout(() => {
         save_text();
     }, 1000);
@@ -163,12 +173,11 @@ function save() {
         document.getElementsByClassName("publish")[0].innerText = "Published";
     }
     socket.emit("save_event", info);
-    last_save = 0;
+    last_save = 1;
     document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
 }
 save_text();
 var the_type = "draft";
-save();
 
 function encodeImageFileAsURL(element, id = 1) {
     if (element.files[0].size > 7000000) { alert('File is too big!'); element.value = '' }
@@ -209,6 +218,11 @@ function add() {
         }
     }
     div.appendChild(quizzes_select);
+    var deleteButton = document.createElement("span");
+    deleteButton.innerText = "Delete";
+    deleteButton.setAttribute("class", "delete");
+    deleteButton.setAttribute("onclick", "this.parentElement.remove()");
+    div.appendChild(deleteButton);
     document.getElementById("quizzes").appendChild(div);
 }
 function logout() {
@@ -222,6 +236,6 @@ function deleteEvent() {
         id: id,
         type: "deleted",
     }
-    socket.emit("save_event", info);
-    window.open("./myworks.html", "_self");
+    socket.emit("save_event", [code, info]);
 }
+socket.on("event_deleted", function () { window.open("../myworks", "_self"); });

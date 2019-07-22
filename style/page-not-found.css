@@ -76,35 +76,36 @@ ul li{
 }
 ul li:nth-child(1){
     padding: 4000px;
-    animation: go-up 24s linear infinite;
-    background: #fa2c2a88;
-    left: -115%;
+    animation: go-up 47s linear infinite;
+    background: #fa2c2aaa;
+    left: -105%;
 }
 ul li:nth-child(2){
     padding: 4000px;
-    animation: go-up 23s linear infinite;
+    animation: go-up 49s linear infinite;
     background: #faba2a88;
-    left: -75.5%;
+    left: -65.5%;
 }
 ul li:nth-child(3){
     padding: 4000px;
-    animation: go-up 22s linear infinite;
+    animation: go-up 51s linear infinite;
     background: #fafa2a88;
-    left: -30%;
+    left: -20%;
 }
 ul li:nth-child(4){
     padding: 4000px;
-    animation: go-up 21s linear infinite;
+    animation: go-up 53s linear infinite;
     background: #2aca2a88;
-    left: 12.5%;
+    left: 22.5%;
 }
 ul li:nth-child(5){
     padding: 4000px;
-    animation: go-up 20s linear infinite;
+    animation: go-up 55s linear infinite;
     background: #2aaafa88;
-    left: 55%;
+    left: 50%;
 }
 @keyframes go-up{
-    0% { top: -150%; transform: rotate(0deg);}
-    100% { top: -150%; transform: rotate(360deg);}
+    0% { top: -100%; transform: rotate(-720deg); padding: 4000px; border-radius: 20%;}
+    50% { top: 50%; transform: rotate(0deg); padding: 0px; border-radius: 90%;}
+    100% { top: -100%; transform: rotate(720deg); padding: 4000px; border-radius: 20%;}
 }

@@ -7,20 +7,23 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="./includings/the_code.js"></script>
     <link rel="stylesheet" href="./style/index.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3"></script>  
     <h1>Meetk</h1>
     <form>
         <div id="login">
             <label>Log in</label>
             <input type="text" name="meetk-username" id="meetk-username" placeholder="Username">
-            <input type="password" name="meetk-password" id="meetk-password" placeholder="Password">
+            <input type="password" name="meetk-password" id="meetk-password" placeholder="Password"><b
+                class="show-password" onclick="showPassword('meetk-password')"><i class="fa fa-eye"></i></b>
             <input type="button" value="Log in" id="lin-button" onclick="login_()" onmouseover="check_lin()">
-            <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"> </div>
+            <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with"
+                data-auto-logout-link="false" data-use-continue-as="false"> </div>
             <a id="register-button">Register</a>
         </div>
         <div id="register">
@@ -31,6 +34,7 @@
                 placeholder="Username">
             <input type="password" name="reg-pass" id="reg-pass" oninput="check('reg-pass')"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="New password">
+            <b class="show-password-reg" onclick="showPassword('reg-pass')"><i class="fa fa-eye"></i></b>
             <div id="pass-message">
                 <h3>Password must contain the following:</h3>
                 <p id="capital" class="invalid">A capital (uppercase) letter</p>
@@ -39,6 +43,7 @@
             </div>
             <input type="password" name="reg-pass-repeat" id="reg-pass-repeat" oninput="check('reg-pass-repeat')"
                 placeholder="Repeat password">
+            <b class="show-password-reg" onclick="showPassword('reg-pass-repeat')"><i class="fa fa-eye"></i></b>
             <select id="day" oninput="check('day')"></select>
             <select id="month" oninput="check('day')">
                 <option value="January">January</option>

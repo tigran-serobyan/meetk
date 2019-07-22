@@ -11,6 +11,14 @@ socket.on('logedin', function (data) {
         socket.emit("get_event", [code, ((document.URL.split("?"))[1].split("="))[1]]);
     }
 });
+socket.on('joinEvent', function (data) {
+    if (am_i(data, code)) {
+        username = data[1].username;
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('loading' + (Math.round(Math.random() * 5))).style.display = 'block';
+        socket.emit("get_event", [code, ((document.URL.split("?"))[1].split("="))[1]]);
+    }
+});
 socket.on('notlogedin', function (data) {
     if (am_i(data, code)) {
         window.open("../", "_self");
@@ -39,19 +47,24 @@ socket.on('get_event', function (data) {
             day.innerText = event.quizzes[i].date;
             var open = document.createElement("a");
             open.innerText = "OPEN";
-            open.setAttribute("class", "open")
+            open.setAttribute("class", "open");
             div.appendChild(title);
             div.appendChild(day);
-            div.appendChild(open);
             if (event.quizzes[i].date == yyyy + "-" + mm + "-" + dd) {
                 bigdiv.setAttribute("class", "quiz today");
+                div.appendChild(open);
             }
             else {
                 if (event.quizzes[i].date <= yyyy + "-" + mm + "-" + dd) {
                     bigdiv.setAttribute("class", "quiz past");
+                    div.appendChild(open);
                 }
                 else {
                     bigdiv.setAttribute("class", "quiz soon");
+                    var soon = document.createElement("a");
+                    soon.innerText = "SOON";
+                    soon.setAttribute("class", "soon-button");
+                    div.appendChild(soon);
                 }
             }
             document.getElementById("list").appendChild(bigdiv);
@@ -65,6 +78,7 @@ socket.on('get_event', function (data) {
         document.getElementById("join").innerText = "START";
         if (join) {
             document.getElementById("join").innerText = "JOIN";
+            document.getElementById("join").onclick = function () { socket.emit("joinEvent", [code, username, event.id]); };
         }
         if (event == "none") {
             window.open("../", "_self");

@@ -65,7 +65,7 @@ function show_events(data) {
                     var join_button = document.createElement("a");
                     join_button.innerText = "JOIN";
                     join_button.setAttribute("class", "join_button");
-                    join_button.setAttribute("href", "event/" + events[i].link);
+                    join_button.setAttribute("href", "../event/" + events[i].link);
                     start_text.appendChild(join_button);
                     div.appendChild(start_text);
                 }
@@ -77,7 +77,7 @@ function show_events(data) {
                     var join_button = document.createElement("a");
                     join_button.innerText = "JOIN";
                     join_button.setAttribute("class", "join_button");
-                    join_button.setAttribute("href", "event/" + events[i].link);
+                    join_button.setAttribute("href", "../event/" + events[i].link);
                     join_button.onclick = function () { socket.emit("event", [code, (this.href.split("/"))[4]]) };
                     start_text.appendChild(join_button);
                     div.appendChild(start_text);
@@ -91,7 +91,7 @@ function show_events(data) {
                     document.getElementById("going").appendChild(bigdiv);
                     var open_text = document.createElement("a");
                     open_text.setAttribute("class", "open_button");
-                    open_text.setAttribute("href", "event/" + events[i].link);
+                    open_text.setAttribute("href", "../event/" + events[i].link);
                     open_text.onclick = function () { socket.emit("event", [code, (this.href.split("/"))[4]]) };
                     open_text.innerText = "OPEN";
                     div.appendChild(open_text);

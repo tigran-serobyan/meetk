@@ -35,7 +35,7 @@ function show_events(data) {
         var edit_button = document.createElement("a");
         edit_button.innerText = "Edit";
         edit_button.setAttribute("class", "edit_button");
-        edit_button.setAttribute("href", "newevent/" + events[i].link);
+        edit_button.setAttribute("href", "../newevent/" + events[i].link);
         div.appendChild(start_text);
         div.appendChild(edit_button);
         eventsDiv.appendChild(bigdiv);
@@ -59,7 +59,7 @@ function show_quizzes(data) {
         var edit_button = document.createElement("a");
         edit_button.innerText = "Edit";
         edit_button.setAttribute("class", "edit_button");
-        edit_button.setAttribute("href", "newquiz/" + quizzes[i].id);
+        edit_button.setAttribute("href", "../newquiz/" + quizzes[i].id);
         div.appendChild(edit_button);
         quizzesDiv.appendChild(bigdiv);
     }
