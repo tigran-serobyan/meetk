@@ -31,7 +31,7 @@ h1{
     position: fixed;
     right: 0%;
     top: 0%;
-    min-height: 800px;
+    height: 100%;
 }
 #register{
     background-color: rgba(255,255,255,0.8);
@@ -41,7 +41,7 @@ h1{
     position: fixed;
     right: 0%;
     top: 0%;
-    min-height: 800px;
+    height: 100%;
 }
 label{
     font-size: 60px;
@@ -145,7 +145,7 @@ input[type = button]:hover{
     font-size: 20px;
     border-radius: 5px;
     padding: 10px;
-    background-color: none;
+    background-color: unset;
     color:#222;
     border:none;
     border: solid 2px #222;
@@ -156,7 +156,7 @@ input[type = button]:hover{
     font-size: 20px;
     border-radius: 5px;
     padding: 10px;
-    background-color: none;
+    background-color: unset;
     color:#222;
     border:none;
     border: solid 2px #222;
@@ -167,7 +167,7 @@ input[type = button]:hover{
     font-size: 20px;
     border-radius: 5px;
     padding: 10px;
-    background-color: none;
+    background-color: unset;
     color:#222;
     border:none;
     border: solid 2px #222;
@@ -260,15 +260,16 @@ input:focus{
     } 
     h1{
         width: 100%;
-        margin: 150px 20%;
+        margin: 150px 0px;
         font-size: 100px;
+        text-align: center;
     }
     #register, #login{
         text-align: center;
-        width: 140%;
+        width: 100%;
         height: unset;
         position: unset;
-        box-sizing: content-box;
+        box-sizing: border-box;
     }
     label{
         margin-bottom: 80px;
@@ -290,6 +291,9 @@ input:focus{
         margin-left: 25%;
         width: 50%;
         font-size: 30px;
+    }
+    input[type = button]:hover{
+        width: 50%;
     }
     #day, #month, #year{
         font-size: 30px;

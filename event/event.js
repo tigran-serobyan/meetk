@@ -52,11 +52,13 @@ socket.on('get_event', function (data) {
             div.appendChild(day);
             if (event.quizzes[i].date == yyyy + "-" + mm + "-" + dd) {
                 bigdiv.setAttribute("class", "quiz today");
+                open.setAttribute("onclick", `openQuiz(${event.quizzes[i].id})`);
                 div.appendChild(open);
             }
             else {
                 if (event.quizzes[i].date <= yyyy + "-" + mm + "-" + dd) {
                     bigdiv.setAttribute("class", "quiz past");
+                    open.setAttribute("onclick", `openQuiz(${event.quizzes[i].id})`);
                     div.appendChild(open);
                 }
                 else {
