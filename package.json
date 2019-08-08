@@ -1,5 +1,5 @@
 {
-  "name": "fs-extra",
+  "name": "meetk",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "express": "^4.17.0",
@@ -11,5 +11,27 @@
     "ip": "^1.1.5",
     "password-hash": "^1.2.2",
     "socket.io": "^2.2.0"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "A social network for creating and sharing your quizzes with your friends)",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tigran-serobyan/meetk.git"
+  },
+  "keywords": [
+    "meetk",
+    "quiz",
+    "game"
+  ],
+  "author": "Tigran Serobyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tigran-serobyan/meetk/issues"
+  },
+  "homepage": "https://github.com/tigran-serobyan/meetk#readme"
 }

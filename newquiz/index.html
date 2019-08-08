@@ -10,67 +10,76 @@
 </head>
 
 <body>
-    <div id="loading" w3-include-html="../includings/loading.html"></div>
-    <form>
-        <div id="top">
-            <input type="text" id="title" placeholder="Title">
-            <input type="text" id="subtitle" placeholder="Subtitle">
-            <input type="text" id="start" value="START">
-            <input type="file" onchange="encodeImageFileAsURL(this,0)" name="file" id="top-img-input"
-                accept="image/x-png,image/jpeg,image/gif">
-            <img src="" id="top-img">
-        </div>
-        <div id="questions">
-            <h3>Questions</h3>
-        </div>
-        <div id="add">
-            <span onclick="add('typing')">Typing</span> <span onclick="add('answer2')">2 Answer</span>
-            <span onclick="add('answer3')">3 Answer</span><span onclick="add('answer4')">4 Answer</span>
-            <span onclick="add('text')">Text</span>
-        </div>
-        <div id="end">
-            <h3>End</h3>
-            <div class="question">
-                <input class="img" id="end_img" type="file" accept="image/x-png,image/jpeg"
-                    onchange="encodeImageFileAsURL(this)">
-                <div id="end_points">
-                    <input id="end_youhave" type="text" value="You have">
-                    <span id="thepoints">(the points)</span>
-                    <input id="end_thepoints" type="text" value="points">
-                    <span class="free-space">.</span>
-                </div>
+<div id="loading" w3-include-html="../includings/loading.html"></div>
+<form>
+    <div id="top">
+        <input type="text" id="title" placeholder="Title">
+        <input type="text" id="subtitle" placeholder="Subtitle">
+        <input type="text" id="start" value="START">
+        <input type="text" id="next" value="Next">
+        <input type="file" onchange="encodeImageFileAsURL(this,0)" name="file" id="top-img-input"
+               accept="image/x-png,image/jpeg,image/gif">
+        <img src="" id="top-img">
+    </div>
+    <div id="questions">
+        <h3>Questions</h3>
+    </div>
+    <div id="add">
+        <span onclick="add('typing')">Typing</span> <span onclick="add('answer2')">2 Answer</span>
+        <span onclick="add('answer3')">3 Answer</span><span onclick="add('answer4')">4 Answer</span>
+        <span onclick="add('text')">Text</span>
+    </div>
+    <div id="end">
+        <h3>End</h3>
+        <div class="question">
+            <input class="img" id="end_img" type="file" accept="image/x-png,image/jpeg"
+                   onchange="encodeImageFileAsURL(this)">
+            <div id="end_points">
+                <input type="text" id="seepoints" value="See points">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <input id="end_youhave" type="text" value="You have">
+                <span id="thepoints">(the points)</span>
+                <input id="end_thepoints" type="text" value="points">
+                <span class="free-space">.</span>
             </div>
         </div>
-        <div id="publish">
-            <h3>Timer</h3>
-            <label class="timer timer-checked">None</label>
-            <label class="timer">30 seconds</label>
-            <label class="timer">60 seconds</label>
-            <label class="timer">90 seconds</label>
-            <label class="timer">2 minute</label>
-            <label class="timer">3 minute</label>
-            <label class="timer">4 minute</label>
-            <label class="timer">5 minute</label>
-            <label class="timer">6 minute</label>
-            <label class="timer">7 minute</label>
-            <label class="timer">8 minute</label>
-            <label class="timer">9 minute</label>
-            <label class="timer">10 minute</label>
-            <label class="timer">12 minute</label>
-            <label class="timer">14 minute</label>
-            <label class="timer">15 minute</label>
-            <div id="save">
-                <p class="publish" onmouseover="check_publish()" onclick="publish() "> Publish </p>
-                <p class="save" onclick="save()"> Not saved </p>
-                <p class="delete" onclick="deleteQuiz()"> Delete </p>
-            </div>
+    </div>
+    <div id="publish">
+        <h3>Timer</h3>
+        <label class="timer timer-checked">None</label>
+        <label class="timer">30 seconds</label>
+        <label class="timer">60 seconds</label>
+        <label class="timer">90 seconds</label>
+        <label class="timer">2 minute</label>
+        <label class="timer">3 minute</label>
+        <label class="timer">4 minute</label>
+        <label class="timer">5 minute</label>
+        <label class="timer">6 minute</label>
+        <label class="timer">7 minute</label>
+        <label class="timer">8 minute</label>
+        <label class="timer">9 minute</label>
+        <label class="timer">10 minute</label>
+        <label class="timer">12 minute</label>
+        <label class="timer">14 minute</label>
+        <label class="timer">15 minute</label>
+        <div id="save">
+            <p class="publish" onmouseover="check_publish()" onclick="publish() "> Publish </p>
+            <p class="save" onclick="save()"> Not saved </p>
+            <p class="delete" onclick="deleteQuiz()"> Delete </p>
         </div>
-    </form>
-    <div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
-    <script src="../includings/include.js"></script>
-    <script src="../includings/connect_and_get_ip.js"></script>
-    <script src="newquiz.js"></script>
-    <script src="../includings/openprofile.js"></script>
+    </div>
+</form>
+<div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
+<script src="../includings/include.js"></script>
+<script src="../includings/connect_and_get_ip.js"></script>
+<script src="newquiz.js"></script>
+<script src="../includings/openprofile.js"></script>
 </body>
 
 </html>

@@ -6,25 +6,32 @@
     <title>Meetk</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="../includings/the_code.js"></script>
-    <link rel="stylesheet" href="../style/event.css">
+    <link rel="stylesheet" href="../style/quiz.css">
     <link rel="stylesheet" href="../style/loading.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 <div id="loading" w3-include-html="../includings/loading.html"></div>
-<div id="top-image">
+<div id="headerDiv">
+    <header id="top-image">
         <h1 id="title"></h1>
         <h2 id="subtitle"></h2>
-        <p id="start"></p>
+        <h3 id="username"></h3>
+        <a href="#questions" id="start"></a>
+    </header>
 </div>
 <div id="questions">
 </div>
-<div id="end">
-    <div id="endimage"></div>
-    <p id="youhave"></p>
-    <p id="thepoints"></p>
-    <p id="points"></p>
+<div id="end" class="question">
+    <div id="endimage" class="img"></div>
+    <div class="questionDiv">
+        <h3>
+            <span id="youhave"></span>
+            <span id="thepoints">0</span>
+            <span id="points"></span>
+        </h3>
+    </div>
 </div>
 <script src="../includings/include.js"></script>
 <script src="../includings/connect_and_get_ip.js"></script>

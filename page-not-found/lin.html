@@ -2,7 +2,7 @@
 <head>
     <style>
         *{
-            transition: 1s;
+            transition: 0.5s;
         }
         body{
             background: url("Log In.png");
@@ -52,7 +52,7 @@
         }
         ul li{
             list-style-type: none;
-            border: solid 25px #38b6ff88;
+            border: solid 25px #38b6ff77;
             width: 250px;
             height: 250px;
             position: fixed;
@@ -121,137 +121,343 @@
             }
         }
     </style>
-<!--    <style>-->
-<!--        *{-->
-<!--            transition: 1s;-->
-<!--        }-->
-<!--        body{-->
-<!--            background: url("Log In (1).png");-->
-<!--            background-size: cover;-->
-<!--            font-family: 'Dosis', sans-serif;-->
-<!--        }-->
-<!--        body > div {-->
-<!--            background: #111d;-->
-<!--            border-radius: 50px;-->
-<!--            padding: 5%;-->
-<!--            width: 40%;-->
-<!--            height: 50%;-->
-<!--            position: absolute;-->
-<!--            top: 15%;-->
-<!--            left: 25%;-->
-<!--        }-->
-<!--        form{-->
-<!--            text-align: center;-->
-<!--        }-->
-<!--        form input{-->
-<!--            width: 80%;-->
-<!--            margin: 1.5% 10%;-->
-<!--            padding: 2% 1%;-->
-<!--            background: none;-->
-<!--            border: solid 2px #777777;-->
-<!--        }-->
-<!--        h1{-->
-<!--            color: #38b6ff;-->
-<!--            font-size: 50px;-->
-<!--        }-->
-<!--        form label{-->
-<!--            color: #38b6ff;-->
-<!--            margin: 3% 2%;-->
-<!--            font-size: 20px;-->
-<!--            display: block;-->
-<!--        }-->
-<!--        body:hover div{-->
-<!--            width: 80%;-->
-<!--            left: 5%;-->
-<!--        }-->
-<!--        form button{-->
-<!--            background: #38b6ff;-->
-<!--            color: #fff;-->
-<!--            border: none;-->
-<!--            font-size: 30px;-->
-<!--            padding: 10px 50px;-->
-<!--        }-->
-<!--        ul li{-->
-<!--            list-style-type: none;-->
-<!--            border: solid 25px #fff8;-->
-<!--            width: 250px;-->
-<!--            height: 250px;-->
-<!--            position: fixed;-->
-<!--            border-radius: 40px;-->
-<!--        }-->
-<!--        ul li:nth-child(1){-->
-<!--            animation: linear 15s spin infinite;-->
-<!--            top: -10%;-->
-<!--            left: 23%;-->
-<!--        }-->
-<!--        ul li:nth-child(2){-->
-<!--            animation: linear 13s spin infinite;-->
-<!--            top: 37%;-->
-<!--            left: 3%;-->
-<!--        }-->
-<!--        ul li:nth-child(3){-->
-<!--            animation: linear 11s spin infinite;-->
-<!--            bottom: -10%;-->
-<!--            left: 30%;-->
-<!--        }-->
-<!--        ul li:nth-child(4){-->
-<!--            animation: linear 17s spin infinite;-->
-<!--            top: -5%;-->
-<!--            right: -2%;-->
-<!--        }-->
-<!--        ul li:nth-child(5){-->
-<!--            animation: linear 19s spin infinite;-->
-<!--            top: 35%;-->
-<!--            right: 15%;-->
-<!--        }-->
-<!--        ul li:nth-child(6){-->
-<!--            animation: linear 21s spin infinite;-->
-<!--            bottom: -5%;-->
-<!--            right: -3%;-->
-<!--        }-->
-<!--        body:hover li:nth-child(1){-->
-<!--            top: -15%;-->
-<!--            left: 5%;-->
-<!--        }-->
-<!--        body:hover li:nth-child(2){-->
-<!--            top: 33%;-->
-<!--            left: -8%;-->
-<!--        }-->
-<!--        body:hover li:nth-child(3){-->
-<!--            bottom: -13%;-->
-<!--            left: 0%;-->
-<!--        }-->
-<!--        body:hover li:nth-child(4){-->
-<!--            top: -15%;-->
-<!--            right: -12%;-->
-<!--        }-->
-<!--        body:hover li:nth-child(5){-->
-<!--            top: 35%;-->
-<!--            right: -10%;-->
-<!--        }-->
-<!--        body:hover li:nth-child(6){-->
-<!--            bottom: -15%;-->
-<!--            right: -10%;-->
-<!--        }-->
-<!--        @keyframes spin {-->
-<!--            from {-->
-<!--                transform: rotate(0deg);-->
-<!--            }-->
-<!--            to {-->
-<!--                transform: rotate(360deg);-->
-<!--            }-->
-<!--        }-->
-<!--    </style> &lt;!&ndash; darkmode &ndash;&gt; -->
+    <style>
+        *{
+            transition: 0.5s;
+        }
+        body{
+            background: url("Log In (1).png");
+            background-size: cover;
+            font-family: 'Dosis', sans-serif;
+        }
+        body > div {
+            background: #111d;
+            border-radius: 50px;
+            padding: 5%;
+            width: 40%;
+            height: 50%;
+            position: absolute;
+            top: 15%;
+            left: 25%;
+        }
+        form{
+            text-align: center;
+        }
+        form input{
+            width: 80%;
+            margin: 1.5% 10%;
+            padding: 2% 1%;
+            background: none;
+            border: solid 2px #777777;
+        }
+        h1{
+            color: #fff;
+            font-size: 50px;
+        }
+        form label{
+            color: #fff;
+            margin: 3% 2%;
+            font-size: 20px;
+            display: block;
+        }
+        body:hover div{
+            width: 80%;
+            left: 5%;
+        }
+        form button{
+            background: #777;
+            color: #000;
+            border: none;
+            font-size: 30px;
+            padding: 10px 50px;
+        }
+        ul li{
+            list-style-type: none;
+            border: solid 25px #fff3;
+            width: 250px;
+            height: 250px;
+            position: fixed;
+            border-radius: 40px;
+        }
+        ul li:nth-child(1){
+            animation: linear 15s spin infinite;
+            top: -10%;
+            left: 23%;
+        }
+        ul li:nth-child(2){
+            animation: linear 13s spin infinite;
+            top: 37%;
+            left: 3%;
+        }
+        ul li:nth-child(3){
+            animation: linear 11s spin infinite;
+            bottom: -10%;
+            left: 30%;
+        }
+        ul li:nth-child(4){
+            animation: linear 17s spin infinite;
+            top: -5%;
+            right: -2%;
+        }
+        ul li:nth-child(5){
+            animation: linear 19s spin infinite;
+            top: 35%;
+            right: 15%;
+        }
+        ul li:nth-child(6){
+            animation: linear 21s spin infinite;
+            bottom: -5%;
+            right: -3%;
+        }
+        body:hover li:nth-child(1){
+            top: -15%;
+            left: 5%;
+        }
+        body:hover li:nth-child(2){
+            top: 33%;
+            left: -8%;
+        }
+        body:hover li:nth-child(3){
+            bottom: -13%;
+            left: 0%;
+        }
+        body:hover li:nth-child(4){
+            top: -15%;
+            right: -12%;
+        }
+        body:hover li:nth-child(5){
+            top: 35%;
+            right: -10%;
+        }
+        body:hover li:nth-child(6){
+            bottom: -15%;
+            right: -10%;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        body>span{
+            color: white;
+        }
+    </style> <!-- darkmode -->
+
+
+
+
+    <style>
+        input{
+            display: block;
+            margin: auto;
+            width: 50%;
+            font-size: 40px;
+        }
+        body>span{
+            margin: 2% 0%;
+            display: inline-block;
+            width: 24%;
+            text-align: center;
+        }
+        .big{
+            display: inline-block;
+            font-size: 70px;
+            width: 100%;
+        }
+        body>span:nth-child(6){
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+        body:hover .login input{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        body:hover .login label{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        body:hover .login h1{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        body:hover .login button{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+
+        .register input{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        .register label{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        .register h1{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        .register button{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        .register> span{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+        .register> span span{
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        }
+
+
+        body:hover .register input{
+            font-size: 30px;
+            border: solid 2px #777;
+            margin: 0.5% auto;
+            padding: 1%;
+        }
+        body:hover .register label{
+            font-size: 20px;
+            margin: 0.5% auto;
+            padding: 1%;
+        }
+        body:hover .register h1{
+            font-size: 50px;
+            margin: 0.5% auto;
+            padding: 1%;
+        }
+        body:hover .register button{
+            font-size: 20px;
+            padding: 1%;
+            margin: unset;
+            border: none;
+        }
+        body:hover .register> span{
+            font-size: unset;
+            margin: unset;
+            padding: unset;
+            display: inline-block;
+            width: 24%;
+        }
+        body:hover .register> span span{
+            font-size: unset;
+            margin: unset;
+            padding: unset;
+        }
+    </style>
+
 </head>
 <body>
 <div>
-    <form action="">
-<!--        <h1>Log In</h1>-->
-<!--        <input type="text">-->
-<!--        <input type="password">-->
-<!--        <label>Forget password?</label>-->
-<!--        <button type="button">Log In</button>-->
-<!--        <label>Register</label>-->
+    <form class="login" action="">
+        <h1>Log In</h1>
+        <input type="text">
+        <input type="password">
+        <label>Forget password?</label>
+        <button type="button">Log In</button>
+        <label>Register</label>
+    </form>
+    <form class="register" action="">
+        <h1>Register</h1>
+        <input type="text">
+        <input type="password" oninput="password(this)">
+        <span id="number">
+  <span class="big">123</span>
+  <span class="small">minimum 1 number</span>
+</span>
+        <span id="symbol">
+  <span class="big">$#&</span>
+  <span class="small">minimum 1 symbol</span>
+</span>
+        <span id="uppercase">
+  <span class="big">ASD</span>
+  <span class="small">minimum 1 uppercase letter</span>
+</span>
+        <span id="letter">
+  <span class="big">**8</span>
+  <span class="small">minimum 8 letter</span>
+</span>
+        <span id="all">
+  <span class="big">VALID</span>
+</span>
+
+
+        <script>
+            numberReg = new RegExp('^[a-zA-Z~!@#$%^&*()_+`=\\][|}{\';":.,?><]*[0-9][a-zA-Z0-9~!@#$%^&*()_+`=\\][|}{\';":.,?><]*');
+            symbolReg = new RegExp('^[a-zA-Z0-9]*[~!@#$%^&*()_+`=\\][|}{\';":.,?><][a-zA-Z0-9~!@#$%^&*()_+`=\\][|}{\';":.,?><]*');
+            upperReg = new RegExp('^[a-z0-9~!@#$%^&*()_+`=\\][|}{\';":.,?><]*[A-Z][a-zA-Z0-9~!@#$%^&*()_+`=\\][|}{\';":.,?><]*');
+            letterReg = new RegExp('^[a-zA-Z0-9~!@#$%^&*()_+`=\\][|}{\';":.,?><]{8,}');
+
+            function password(element) {
+                all = true;
+                if (numberReg.exec(element.value)) {
+                    document.getElementById('number').style.color = '#33af33';
+                    all = all && true;
+                } else {
+                    document.getElementById('number').style.color = '#af3333';
+                    all = all && false;
+                }
+
+                if (symbolReg.exec(element.value)) {
+                    document.getElementById('symbol').style.color = '#33af33';
+                    all = all && true;
+                } else {
+                    document.getElementById('symbol').style.color = '#af3333';
+                    all = all && false;
+                }
+
+                if (upperReg.exec(element.value)) {
+                    document.getElementById('uppercase').style.color = '#33af33';
+                    all = all && true;
+                } else {
+                    document.getElementById('uppercase').style.color = '#af3333';
+                    all = all && false;
+                }
+
+                if (letterReg.exec(element.value)) {
+                    document.getElementById('letter').style.color = '#33af33';
+                    all = all && true;
+                } else {
+                    document.getElementById('letter').style.color = '#af3333';
+                    all = all && false;
+                }
+
+
+                if (all) {
+                    document.getElementById('all').style.color = '#33af33';
+                } else {
+                    document.getElementById('all').style.color = '#af3333';
+                }
+            }
+        </script>
+        <input type="password">
+        <button type="button">Next</button>
+        <label>Log In</label>
     </form>
 </div>
 <ul>
