@@ -27,6 +27,7 @@ socket.on('get_quiz', function (data) {
         document.getElementById("subtitle").value = quiz_info.subtitle;
         document.getElementById("start").value = quiz_info.start;
         document.getElementById("next").value = quiz_info.next;
+        document.getElementById("check").value = quiz_info.check;
         document.getElementById('seepoints').value = quiz_info.seepoints;
         if (quiz_info.topimage) {
             document.getElementById("top-img").src = quiz_info.topimage;
@@ -38,13 +39,14 @@ socket.on('get_quiz', function (data) {
         document.getElementById("end_thepoints").value = quiz_info.end_thepoints;
         id = quiz_info.id;
         the_type = quiz_info.type;
-        for (var i in document.getElementsByClassName("timer")) {
-            if (quiz_info.timer == document.getElementsByClassName("timer")[i].innerText) {
-                for (var j = 0; j < document.getElementsByClassName("timer").length; j++) {
-                    document.getElementsByClassName("timer")[j].setAttribute("class", "timer");
-                }
-                document.getElementsByClassName("timer")[i].setAttribute("class", "timer timer-checked");
-            }
+        if (quiz_info.timer === 'None') {
+            document.getElementsByClassName("timer")[1].setAttribute("class", "timer");
+            document.getElementsByClassName("timer")[0].setAttribute("class", "timer timer-checked");
+        } else {
+            document.getElementsByClassName("timer")[0].setAttribute("class", "timer");
+            document.getElementsByClassName("timer")[1].setAttribute("class", "timer timer-checked");
+            document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[0].value = Math.floor(quiz_info.timer/60);
+            document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[1].value = quiz_info.timer%60;
         }
         for (var i in quiz_info.questions) {
             add(quiz_info.questions[i].type);
@@ -52,9 +54,9 @@ socket.on('get_quiz', function (data) {
             if (quiz_info.questions[i].image) {
                 question.getElementsByClassName("img")[0].style.backgroundImage = "url('" + quiz_info.questions[i].image + "')";
             }
-            if (quiz_info.questions[i].type != 'text') {
+            if (quiz_info.questions[i].type !== 'text') {
                 question.getElementsByClassName("question_input")[0].value = quiz_info.questions[i].question;
-                if (quiz_info.questions[i].type != 'typing') {
+                if (quiz_info.questions[i].type !== 'typing') {
                     for (var j in quiz_info.questions[i].answer) {
                         question.getElementsByClassName("answer_button")[j].value = quiz_info.questions[i].answer[j].text;
                         if (quiz_info.questions[i].answer[j].true) {
@@ -64,6 +66,8 @@ socket.on('get_quiz', function (data) {
                 } else {
                     question.getElementsByClassName("answer_input")[0].value = quiz_info.questions[i].answer;
                 }
+            } else {
+                question.getElementsByClassName("question_textarea")[0].value = quiz_info.questions[i].text;
             }
         }
     }
@@ -274,7 +278,13 @@ function save_text() {
 
 function save() {
     document.getElementsByClassName("publish")[0].innerText = "Publish";
-    var timer = document.getElementsByClassName("timer-checked")[0].innerText;
+    if (document.getElementsByClassName("timer-checked")[0].innerText === 'None') {
+        var timer = 'None';
+    } else {
+        let min = document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[0].value;
+        let sec = document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[1].value;
+        var timer = min * 60 + sec;
+    }
     var question_divs = document.getElementsByClassName("question");
     var questions = [];
     for (var i = 0; i < question_divs.length - 1; i++) {
@@ -314,6 +324,7 @@ function save() {
         subtitle: document.getElementById("subtitle").value,
         start: document.getElementById("start").value,
         next: document.getElementById('next').value,
+        check: document.getElementById('check').value,
         seepoints: document.getElementById('seepoints').value,
         topimage: document.getElementById("top-img").src,
         questions: questions,

@@ -1,33 +1,39 @@
-a{
+a {
     text-decoration: none;
 }
-body{
+
+body {
     padding: 0px;
     margin: 0px;
     position: relative;
     padding: 60px 0px 0px;
 }
-#top-bar{
-    top:0px;
+
+#top-bar {
+    top: 0px;
     position: fixed;
     width: 100%;
     background-color: #ececec;
 }
-.top-bar-menu{
+
+.top-bar-menu {
     display: inline-block;
     text-align: right;
     width: 97%;
     margin: 20px 0px 20px;
 }
-.top-bar-menu li{
+
+.top-bar-menu li {
     display: inline;
     position: relative;
     padding: 22px 20px 22px 20px;
 }
-.top-bar-menu li:hover{
+
+.top-bar-menu li:hover {
     background-color: #cecece;
 }
-.dropdown{
+
+.dropdown {
     display: none;
     position: absolute;
     top: 60px;
@@ -35,17 +41,21 @@ body{
     width: 200%;
     background-color: #ececec;
 }
-.dropdown a{
+
+.dropdown a {
     display: block;
     padding: 5px 20px 5px 5px;
 }
-.dropdown a:hover{
+
+.dropdown a:hover {
     background: #cecece;
 }
-.top-bar-menu li:hover .dropdown{
+
+.top-bar-menu li:hover .dropdown {
     display: block;
 }
-#top input{
+
+#top input {
     display: block;
     padding: 10px;
     border-radius: 10px;
@@ -54,30 +64,37 @@ body{
     font-size: 26px;
     height: 50px;
 }
-#title{
+
+#title {
     width: 400px;
 }
-#subtitle{
+
+#subtitle {
     width: 700px;
 }
-#start{
+
+#start {
     width: 180px;
     text-align: center;
 }
+
 #top-img-input::-webkit-file-upload-button {
     display: none;
 }
-#top-img-input{
+
+#top-img-input {
     width: 500px;
     text-align: center;
     position: relative;
 }
-#top-img-input::after{
+
+#top-img-input::after {
     content: "Click to select image or drag image here";
     position: absolute;
     margin: 10px;
 }
-#top img{
+
+#top img {
     border-radius: 10px;
     border: solid 2px #333;
     background: #ececec;
@@ -89,10 +106,12 @@ body{
     max-height: 400px;
     background-size: cover;
 }
-h3{
+
+h3 {
     font-size: 50px;
 }
-#add span{
+
+#add span {
     display: inline-block;
     padding: 10px;
     border-radius: 10px;
@@ -100,8 +119,9 @@ h3{
     margin: 5px;
     font-size: 20px;
 }
+
 /* Questions */
-.question .img{
+.question .img {
     width: 30%;
     display: inline-block;
     background-size: cover;
@@ -113,21 +133,25 @@ h3{
     border: solid 2px #777;
     border-radius: 10px;
 }
+
 .question .img::-webkit-file-upload-button {
     display: none;
 }
-.question .img::after{
+
+.question .img::after {
     content: "Click to select image or drag image here";
     position: absolute;
     margin: 280px 50px 0px 18%;
 }
-.question div{
+
+.question div {
     width: 49.5%;
     display: inline-block;
     box-sizing: border-box;
     padding: 0px 20px;
 }
-.question_input{
+
+.question_input {
     font-size: 50px;
     display: block;
     padding: 10px;
@@ -138,7 +162,8 @@ h3{
     width: 90%;
     border-radius: 10px;
 }
-.answer_input, .answer_button{
+
+.answer_input, .answer_button {
     font-size: 30px;
     display: block;
     padding: 10px;
@@ -149,7 +174,8 @@ h3{
     width: 90%;
     border-radius: 10px;
 }
-.question_textarea{
+
+.question_textarea {
     font-size: 30px;
     display: block;
     padding: 10px;
@@ -161,7 +187,8 @@ h3{
     height: 400px;
     border-radius: 10px;
 }
-#end_points input{
+
+#end_points input {
     font-size: 30px;
     display: block;
     padding: 10px;
@@ -172,7 +199,8 @@ h3{
     width: 90%;
     border-radius: 10px;
 }
-#thepoints{
+
+#thepoints {
     font-size: 30px;
     display: block;
     padding: 10px;
@@ -182,24 +210,29 @@ h3{
     width: 90%;
     border-radius: 10px;
 }
-.free-space{
+
+.free-space {
     display: block;
     width: 300px;
     margin: 80px 0px 0px 0px;
-    color: rgba(0,0,0,0);
+    color: rgba(0, 0, 0, 0);
 }
-input:focus, input:hover{
-    border-style:dashed;
+
+input:focus, input:hover {
+    border-style: dashed;
     outline: none;
 }
-.question .img:hover, .question .img:focus{
-    border-style:dashed;
+
+.question .img:hover, .question .img:focus {
+    border-style: dashed;
     outline: none;
 }
-#top input:hover, #top input:focus{
-    border-style:dashed;
+
+#top input:hover, #top input:focus {
+    border-style: dashed;
     outline: none;
 }
+
 .timer {
     transition: 0.5s;
     display: inline-block;
@@ -210,34 +243,43 @@ input:focus, input:hover{
     border: solid 2px #006622;
     border-radius: 10px;
 }
-.timer:hover{
+
+.timer input {
+    background: none;
+    border: none;
+    font-size: 20px;
+    width: 50px;
+    text-align: right;
+}
+
+.timer:hover {
     background: #ececec;
 }
-.timer-checked{
+
+.timer-checked {
     background: #006622;
     color: white;
 }
-.timer-checked:hover{
+
+.timer-checked input {
+    color: white;
+}
+
+.timer-checked input::placeholder {
+    color: white;
+    opacity: 0.5;
+}
+
+.timer-checked:hover {
     background: #006622;
     color: #ddd;
 }
-#save{
+
+#save {
     text-align: center;
 }
-.publish{
-    text-align: center;
-    display: inline-block;
-    padding: 10px 30px;
-    margin: 5px;
-    cursor: pointer;
-    font-size: 22px;
-    border: solid 2px #333;
-    border-radius: 10px;
-    background: #333;
-    color: white;
-    transition: 0.5s;
-}
-.save{
+
+.publish {
     text-align: center;
     display: inline-block;
     padding: 10px 30px;
@@ -250,7 +292,22 @@ input:focus, input:hover{
     color: white;
     transition: 0.5s;
 }
-.delete{
+
+.save {
+    text-align: center;
+    display: inline-block;
+    padding: 10px 30px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    border: solid 2px #333;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    transition: 0.5s;
+}
+
+.delete {
     text-align: center;
     display: inline-block;
     padding: 10px 30px;
@@ -263,30 +320,38 @@ input:focus, input:hover{
     color: white;
     transition: 0.5s;
 }
-.publish:hover{
+
+.publish:hover {
     background: #006622;
     border: solid 2px #006622;
 }
-.save:hover{
+
+.save:hover {
     background: #006622;
     border: solid 2px #006622;
 }
-.delete:hover{
+
+.delete:hover {
     background: #990000;
     border: solid 2px #990000;
 }
-#questions{
+
+#questions {
     padding: 0px 20px;
 }
-#top{
+
+#top {
     padding: 0px 20px;
 }
-#add{
+
+#add {
     padding: 0px 20px;
 }
-#publish{
+
+#publish {
     padding: 0px 20px;
 }
-#end{
+
+#end {
     padding: 0px 20px;
 }

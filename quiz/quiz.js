@@ -16,9 +16,12 @@ socket.on('notlogedin', function (data) {
         window.open("../../", "_self");
     }
 });
+let timer = 0;
 socket.on('get_quiz', function (data) {
-    console.log(data);
     if (am_i(data[0], code)) {
+        if (data[1].timer !== 'None') {
+            timer = data[1].timer;
+        }
         document.getElementById('loading').style.display = 'none';
         quiz = data[1];
         document.getElementById("top-image").style.backgroundImage = "url('" + quiz.topimage + "')";
@@ -41,11 +44,11 @@ socket.on('get_quiz', function (data) {
 
             let questionDiv = document.createElement('div');
             questionDiv.setAttribute('class', 'questionDiv');
-            let questionText = document.createElement("h3");
-            questionText.innerText = quiz.questions[i].question;
-            questionDiv.appendChild(questionText);
 
             if (quiz.questions[i].type.slice(0, 6) === 'answer') {
+                let questionText = document.createElement("h3");
+                questionText.innerText = quiz.questions[i].question;
+                questionDiv.appendChild(questionText);
                 let trueAnswerIndex = 0;
                 for (let answerIndex in quiz.questions[i].answer) {
                     if (quiz.questions[i].answer[answerIndex].true) {
@@ -59,6 +62,25 @@ socket.on('get_quiz', function (data) {
                     answerButton.innerText = quiz.questions[i].answer[answerIndex].text;
                     questionDiv.appendChild(answerButton);
                 }
+            }
+            if (quiz.questions[i].type === 'typing') {
+                let questionText = document.createElement("h3");
+                questionText.innerText = quiz.questions[i].question;
+                questionDiv.appendChild(questionText);
+                let answerInput = document.createElement("input");
+                answerInput.setAttribute('class', `answer${parseInt(i) + 1}`);
+                let checkAnswer = document.createElement("button");
+                checkAnswer.innerText = quiz.check;
+                checkAnswer.setAttribute('class', `check check${parseInt(i) + 1}`);
+                checkAnswer.setAttribute('onclick', `checkInput(${parseInt(i) + 1},'${quiz.questions[i].answer}')`);
+                questionDiv.appendChild(answerInput);
+                questionDiv.appendChild(checkAnswer);
+            }
+            if (quiz.questions[i].type === 'text') {
+                let text = document.createElement("p");
+                text.setAttribute('class', `answer${parseInt(i) + 1}`);
+                text.innerText = quiz.questions[i].text;
+                questionDiv.appendChild(text);
             }
 
             let nextButton = document.createElement('a');
@@ -76,21 +98,68 @@ socket.on('get_quiz', function (data) {
             div.appendChild(question);
         }
     }
+    window.scrollTo(0, 0);
+    window.onscroll = function () {
+        if (document.documentElement.scrollTop > 20) {
+            start();
+            window.onscroll = function () {
+            };
+        }
+    };
 });
 
+function start() {
+    window.scrollTo({
+        top: 980,
+        left: 0,
+        behavior: 'smooth'
+    });
+    if (document.documentElement.scrollTop < 480) {
+        setTimeout(function () {
+            start();
+        }, 500);
+    } else {
+        if (timer) {
+            setTimeout(function () {
+                document.getElementById('timer').style.width = '0%';
+            }, 500);
+            document.getElementById('timer').style.width = '100%';
+            document.getElementById('timer').style.display = 'block';
+            document.getElementById('timer').style.transition = `${parseInt(timer)}s linear`;
+            setTimeout(function () {
+                document.getElementById('questions').innerText = '';
+            }, timer * 1000);
+        }
+    }
+}
 
 function check(q, a, t, b) {
     document.getElementsByClassName("answer" + q)[t].style.background = "#29a329";
     document.getElementsByClassName("answer" + q)[t].style.borderColor = "#29a329";
     document.getElementsByClassName("answer" + q)[t].style.color = "#fff";
     document.getElementById("thepoints").innerText = parseInt(document.getElementById("thepoints").innerText) + 1;
-    if (b == false) {
+    if (b === false) {
         document.getElementsByClassName("answer" + q)[a].style.background = "#cc1211";
         document.getElementsByClassName("answer" + q)[a].style.borderColor = "#cc1211";
         document.getElementsByClassName("answer" + q)[a].style.color = "#fff";
         document.getElementById("thepoints").innerText = parseInt(document.getElementById("thepoints").innerText) - 1;
     }
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < document.getElementsByClassName("answer" + q).length; i++) {
         document.getElementsByClassName("answer" + q)[i].disabled = true;
     }
+}
+
+function checkInput(q, t) {
+    document.getElementsByClassName("answer" + q)[0].style.background = "#29a329";
+    document.getElementsByClassName("answer" + q)[0].style.borderColor = "#29a329";
+    document.getElementsByClassName("answer" + q)[0].style.color = "#fff";
+    document.getElementById("thepoints").innerText = parseInt(document.getElementById("thepoints").innerText) + 1;
+    if (document.getElementsByClassName("answer" + q)[0].value !== t) {
+        document.getElementsByClassName("answer" + q)[0].style.background = "#cc1211";
+        document.getElementsByClassName("answer" + q)[0].style.borderColor = "#cc1211";
+        document.getElementsByClassName("answer" + q)[0].style.color = "#fff";
+        document.getElementById("thepoints").innerText = parseInt(document.getElementById("thepoints").innerText) - 1;
+    }
+    document.getElementsByClassName("answer" + q)[0].disabled = true;
+    document.getElementsByClassName("check" + q)[0].disabled = true;
 }
