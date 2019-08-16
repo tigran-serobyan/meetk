@@ -45,8 +45,8 @@ socket.on('get_quiz', function (data) {
         } else {
             document.getElementsByClassName("timer")[0].setAttribute("class", "timer");
             document.getElementsByClassName("timer")[1].setAttribute("class", "timer timer-checked");
-            document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[0].value = Math.floor(quiz_info.timer/60);
-            document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[1].value = quiz_info.timer%60;
+            document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[0].value = Math.floor(quiz_info.timer / 60);
+            document.getElementsByClassName("timer-checked")[0].getElementsByTagName('input')[1].value = quiz_info.timer % 60;
         }
         for (var i in quiz_info.questions) {
             add(quiz_info.questions[i].type);
@@ -216,32 +216,38 @@ for (var i in document.getElementsByClassName("timer")) {
 
 function check_publish() {
     document.getElementsByClassName("publish")[0].style = "";
-    for (var i = 0; i < document.getElementsByClassName("img").length; i++) {
-        if (document.getElementsByClassName("img")[i].style.backgroundImage == "") {
+    document.getElementsByClassName("publish")[0].disabled = false;
+    for (let i = 0; i < document.getElementsByClassName("img").length; i++) {
+        if (document.getElementsByClassName("img")[i].style.backgroundImage === "") {
             document.getElementsByClassName("publish")[0].style.background = "#a31200";
             document.getElementsByClassName("publish")[0].style.borderColor = "#a31200";
+            document.getElementsByClassName("publish")[0].disabled = true;
         }
     }
-    for (var i = 0; i < document.getElementsByTagName("input").length; i++) {
-        if (document.getElementsByTagName("input")[i].value == "") {
+    for (let i = 0; i < document.getElementsByTagName("input").length; i++) {
+        if (document.getElementsByTagName("input")[i].value === "" &&
+            document.getElementsByTagName("input")[i].type === 'text') {
             document.getElementsByClassName("publish")[0].style.background = "#a31200";
             document.getElementsByClassName("publish")[0].style.borderColor = "#a31200";
+            document.getElementsByClassName("publish")[0].disabled = true;
         }
     }
-    if (document.getElementById("top-img").src == document.URL) {
+    if (document.getElementById("top-img").src === document.URL) {
         document.getElementsByClassName("publish")[0].style.background = "#a31200";
         document.getElementsByClassName("publish")[0].style.borderColor = "#a31200";
+        document.getElementsByClassName("publish")[0].disabled = true;
     }
-    setTimeout(() => {
-        check_publish();
-    }, 2000);
+    if (document.getElementsByClassName("publish")[0].style !== "") {
+        setTimeout(() => {
+            check_publish();
+        }, 1000);
+    }
 }
 
 function publish() {
     if (document.getElementsByClassName("publish")[0].style.background == "") {
-        the_type = "published";
         document.getElementsByClassName("publish")[0].innerText = "Publishing";
-        save();
+        save("published");
     }
 }
 
@@ -276,7 +282,7 @@ function save_text() {
     }, 1000);
 }
 
-function save() {
+function save(type) {
     document.getElementsByClassName("publish")[0].innerText = "Publish";
     if (document.getElementsByClassName("timer-checked")[0].innerText === 'None') {
         var timer = 'None';
@@ -317,9 +323,9 @@ function save() {
         questions.push(question);
     }
     var info = {
-        id: id,
-        username: username,
-        type: the_type,
+        id,
+        username,
+        type,
         title: document.getElementById("title").value,
         subtitle: document.getElementById("subtitle").value,
         start: document.getElementById("start").value,
@@ -327,15 +333,38 @@ function save() {
         check: document.getElementById('check').value,
         seepoints: document.getElementById('seepoints').value,
         topimage: document.getElementById("top-img").src,
-        questions: questions,
+        questions,
         end_youhave: document.getElementById("end_youhave").value,
         end_thepoints: document.getElementById("end_thepoints").value,
         end_image: document.getElementById("end_img").style.backgroundImage,
-        timer: timer
-    }
+        timer
+    };
     socket.emit("save_quiz", info);
-    if (the_type == "published") {
+    if (type === 'published') {
+        var info = {
+            id,
+            username,
+            type: 'draft',
+            title: document.getElementById("title").value,
+            subtitle: document.getElementById("subtitle").value,
+            start: document.getElementById("start").value,
+            next: document.getElementById('next').value,
+            check: document.getElementById('check').value,
+            seepoints: document.getElementById('seepoints').value,
+            topimage: document.getElementById("top-img").src,
+            questions,
+            end_youhave: document.getElementById("end_youhave").value,
+            end_thepoints: document.getElementById("end_thepoints").value,
+            end_image: document.getElementById("end_img").style.backgroundImage,
+            timer
+        }
+        socket.emit("save_quiz", info);
+    }
+    if (type == "published") {
         document.getElementsByClassName("publish")[0].innerText = "Published";
+        setTimeout(function () {
+            document.getElementsByClassName("publish")[0].innerText = "Publish";
+        }, 5000)
     }
     last_save = 1;
     document.getElementsByClassName("save")[0].innerText = "Last save: just now (click to save)";
@@ -345,6 +374,7 @@ save_text();
 var the_type = "draft";
 
 function logout() {
+    localStorage.clear();
     var info = {
         username: username
     };
@@ -352,13 +382,13 @@ function logout() {
 }
 
 function deleteQuiz() {
-    var info = {
+    socket.emit("save_quiz", [code, {
+        id,
+        type: "published"
+    }]);
+    socket.emit("save_quiz", [code, {
         id: id,
-        type: "deleted",
-    }
-    socket.emit("save_quiz", [code, info]);
-}
-
-socket.on("quiz_deleted", function () {
+        type: "draft",
+    }]);
     window.open("../myworks", "_self");
-});
+}

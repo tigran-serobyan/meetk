@@ -30,13 +30,10 @@ function show_events(data) {
         var title = document.createElement("h2");
         title.innerText = events[i].name;
         div.appendChild(title);
-        var start_text = document.createElement("p");
-        start_text.innerHTML = "Starting: " + events[i].start + "<br> Ending:" + events[i].end;
         var edit_button = document.createElement("a");
         edit_button.innerText = "Edit";
         edit_button.setAttribute("class", "edit_button");
         edit_button.setAttribute("href", "../newevent/" + events[i].link);
-        div.appendChild(start_text);
         div.appendChild(edit_button);
         eventsDiv.appendChild(bigdiv);
     }
@@ -74,6 +71,7 @@ socket.on('get_my_works', function (data) {
     }
 });
 function logout() {
+    localStorage.clear();
     var info = {
         username: username
     };

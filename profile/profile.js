@@ -74,7 +74,8 @@ socket.on('get_the_profile', function (data) {
     }
 });
 function logout() {
-    var info = {
+localStorage.clear();
+var info = {
         username: username
     };
     socket.emit("logout", [info, code]);

@@ -1,6 +1,7 @@
 a{
     text-decoration: none;
     color: black;
+    cursor: pointer;
 }
 body{
     margin: 0px;

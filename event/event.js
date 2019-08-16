@@ -88,6 +88,7 @@ socket.on('get_event', function (data) {
     }
 });
 function logout() {
+    localStorage.clear();
     var info = {
         username: username
     };

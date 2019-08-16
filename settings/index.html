@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div id="top">
+<div id="top">
         <span id="top-all">
             <input type="file" id="profile_image" accept="image/x-png,image/jpeg" onchange="encodeImageFileAsURL(this)">
             <span id="top-name">
@@ -21,16 +21,16 @@
             </span>
             <div>
                 <input type="file" id="coverInput" accept="image/x-png,image/jpeg"
-                    onchange="encodeImageFileAsURL(this, this.parentElement.parentElement)">
-                <input type="button" value="Save" id="save">
+                       onchange="encodeImageFileAsURL(this, this.parentElement.parentElement.parentElement)">
+                <input type="button" value="Save" id="save" onclick="save()" onmouseover="check_save()">
             </div>
         </span>
-    </div>
-    <div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
-    <script src="../includings/include.js"></script>
-    <script src="../includings/connect_and_get_ip.js"></script>
-    <script src="settings.js"></script>
-    <script src="../includings/openprofile.js"></script>
+</div>
+<div id="top-bar" w3-include-html="../includings/top-bar-no-search.html"></div>
+<script src="../includings/include.js"></script>
+<script src="../includings/connect_and_get_ip.js"></script>
+<script src="settings.js"></script>
+<script src="../includings/openprofile.js"></script>
 </body>
 
 </html>

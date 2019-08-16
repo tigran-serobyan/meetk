@@ -5,6 +5,7 @@ function no_username(the_code) {
         document.getElementById("reg-button").disabled = false
     }
 }
+
 function no_login(the_code) {
     if (am_i(the_code, code)) {
         document.getElementById("meetk-username").style.background = "#a31200";
@@ -21,17 +22,26 @@ function no_login(the_code) {
         }, 2000);
     }
 }
+
 function logedin(data) {
     if (am_i(data[0], code)) {
-        var info = {
-            "username": document.getElementById("meetk-username").value,
-            "password": document.getElementById("meetk-password").value
-        };
+        if (!username || !password) {
+            var info = {
+                "username": document.getElementById("meetk-username").value,
+                "password": document.getElementById("meetk-password").value
+            };
+        } else {
+            var info = {
+                username,
+                password
+            };
+        }
         localStorage.setItem("meetk_username", JSON.stringify(info.username));
         localStorage.setItem("meetk_password", JSON.stringify(info.password));
         window.open("/home", "_self");
     }
 }
+
 function redistered(the_code) {
     if (am_i(the_code, code)) {
         document.getElementById("name").value = "";
@@ -62,10 +72,12 @@ function redistered(the_code) {
         }, 3000);
     }
 }
+
 socket.on('no_username', no_username);
 socket.on('no_login', no_login);
 socket.on('logedin', logedin);
 socket.on('registered', redistered);
+
 function login_() {
     var info = {
         "username": document.getElementById("meetk-username").value,
@@ -75,13 +87,13 @@ function login_() {
     document.getElementById("lin-button").disabled = true;
     socket.emit("login", [info, code]);
 }
+
 function check_lin() {
     if (document.getElementById("meetk-username").value != "" && document.getElementById("meetk-password").value != "") {
         document.getElementById("lin-button").style.background = "";
         document.getElementById("lin-button").style.border = "";
         document.getElementById("lin-button").disabled = false;
-    }
-    else {
+    } else {
         document.getElementById("lin-button").style.background = "#a31200";
         document.getElementById("lin-button").style.border = "solid 2px #a31200";
         document.getElementById("lin-button").disabled = true;
@@ -90,6 +102,7 @@ function check_lin() {
         }, 1000);
     }
 }
+
 var countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas"
     , "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands"
     , "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica"
@@ -105,6 +118,7 @@ var countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Angu
     , "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia"
     , "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay"
     , "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+
 function check_reg() {
     if (document.getElementById("name").style.background == "rgb(0, 102, 34)" && document.getElementById("surname").style.background == "rgb(0, 102, 34)"
         && document.getElementById("reg-username").style.background == "rgb(0, 102, 34)" && document.getElementById("reg-pass").style.background == "rgb(0, 102, 34)"
@@ -112,8 +126,7 @@ function check_reg() {
         document.getElementById("reg-button").style.background = "";
         document.getElementById("reg-button").style.border = "";
         document.getElementById("reg-button").disabled = false;
-    }
-    else {
+    } else {
         document.getElementById("reg-button").style.background = "#a31200";
         document.getElementById("reg-button").style.border = "solid 2px #a31200";
         document.getElementById("reg-button").disabled = true;
@@ -122,6 +135,7 @@ function check_reg() {
         }, 1000);
     }
 }
+
 function register_() {
     var info = {
         "name": document.getElementById("name").value,
@@ -136,6 +150,7 @@ function register_() {
     document.getElementById("reg-button").disabled = true;
     socket.emit("register", [info, code]);
 }
+
 function check(id) {
     if (id == "reg-pass") {
         document.getElementById(id).style.background = "#006622";
@@ -176,17 +191,14 @@ function check(id) {
                 document.getElementById(id).style.background = "#a31200";
             }
         }
-    }
-    else if (id == "reg-pass-repeat") {
+    } else if (id == "reg-pass-repeat") {
         if (document.getElementById(id).value == document.getElementById("reg-pass").value && document.getElementById(id).value) {
             document.getElementById(id).style.background = "#006622";
-        }
-        else {
+        } else {
             document.getElementById(id).style.background = "#a31200";
         }
 
-    }
-    else if (id == "day") {
+    } else if (id == "day") {
         day_f();
         document.getElementById(id).style.color = "#fff";
         document.getElementById("year").style.color = "#fff";
@@ -195,15 +207,13 @@ function check(id) {
             document.getElementById(id).style.background = "#006622";
             document.getElementById("year").style.background = "#006622";
             document.getElementById("month").style.background = "#006622";
-        }
-        else {
+        } else {
             document.getElementById(id).style.background = "#a31200";
             document.getElementById("year").style.background = "#a31200";
             document.getElementById("month").style.background = "#a31200";
         }
 
-    }
-    else {
+    } else {
         if (id == "location") {
             document.getElementById(id).style.background = "#a31200";
             for (var i in countries) {
@@ -212,19 +222,19 @@ function check(id) {
                     document.getElementById(id).style.background = "#006622";
                 }
             }
-        }
-        else {
+        } else {
             if (!document.getElementById(id).value) {
                 document.getElementById(id).style.background = "#a31200";
-            }
-            else {
+            } else {
                 document.getElementById(id).style.background = "#006622";
             }
         }
     }
 }
+
 var last_month;
 var last_year;
+
 function day_f() {
     if (document.getElementById("month").value != last_month || document.getElementById("year").value != last_year) {
         last_month = document.getElementById("month").value;
@@ -237,20 +247,17 @@ function day_f() {
                 document.getElementById("day").innerHTML += '<option value="' + day + '">' + day + '</option>';
             }
 
-        }
-        else if (month == "February") {
+        } else if (month == "February") {
             if (document.getElementById("year").value % 4) {
                 for (var day = 1; day <= 28; day++) {
                     document.getElementById("day").innerHTML += '<option value="' + day + '">' + day + '</option>';
                 }
-            }
-            else {
+            } else {
                 for (var day = 1; day <= 29; day++) {
                     document.getElementById("day").innerHTML += '<option value="' + day + '">' + day + '</option>';
                 }
             }
-        }
-        else {
+        } else {
             for (var day = 1; day <= 30; day++) {
                 document.getElementById("day").innerHTML += '<option value="' + day + '">' + day + '</option>';
             }
@@ -262,12 +269,15 @@ function day_f() {
         day_f()
     }, 1000);
 }
+
 function autocomplete(inp, arr) {
     var currentFocus;
     inp.addEventListener("input", function (e) {
         var a, b, i, val = this.value;
         closeAllLists();
-        if (!val) { return false; }
+        if (!val) {
+            return false;
+        }
         currentFocus = -1;
         a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
@@ -304,6 +314,7 @@ function autocomplete(inp, arr) {
             }
         }
     });
+
     function addActive(x) {
         if (!x) return false;
         removeActive(x);
@@ -311,11 +322,13 @@ function autocomplete(inp, arr) {
         if (currentFocus < 0) currentFocus = (x.length - 1);
         x[currentFocus].classList.add("autocomplete-active");
     }
+
     function removeActive(x) {
         for (var i = 0; i < x.length; i++) {
             x[i].classList.remove("autocomplete-active");
         }
     }
+
     function closeAllLists(elmnt) {
         var x = document.getElementsByClassName("autocomplete-items");
         for (var i = 0; i < x.length; i++) {
@@ -324,18 +337,22 @@ function autocomplete(inp, arr) {
             }
         }
     }
+
     document.addEventListener("click", function (e) {
         closeAllLists(e.target);
     });
 }
+
 function register() {
     document.getElementById("login").style.display = "none";
     document.getElementById("register").style.display = "block";
 }
+
 function login() {
     document.getElementById("login").style.display = "block";
     document.getElementById("register").style.display = "none";
 }
+
 login();
 day_f();
 autocomplete(document.getElementById("location"), countries);
@@ -348,8 +365,7 @@ for (var i = year - 5; i >= year - 120; i--) {
 showPassword = function (id) {
     if (document.getElementById(id).type == 'password') {
         document.getElementById(id).type = 'text';
-    }
-    else {
+    } else {
         document.getElementById(id).type = 'password';
     }
 }

@@ -97,7 +97,7 @@ socket.emit("open", [{ username, password }, code]);
 function no_login(the_code) {
     if (am_i(the_code, code)) {
         localStorage.clear();
-        window.open("../", "_self")
+        window.open("../", "_self");
     }
 }
 socket.on('no_login', no_login);

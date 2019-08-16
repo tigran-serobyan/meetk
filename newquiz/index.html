@@ -56,11 +56,11 @@
         <label class="timer timer-checked">None</label>
         <label class="timer">
             <input type="number" min="0" placeholder="min">
-            <input type="number" min="5" max="59" oninput="if(this.value > 59){this.value = 59}" placeholder="sec">
+            <input type="number" oninput="if(this.value > 59){this.value = 59} if(this.value < 1){this.value = 1}" placeholder="sec">
         </label>
         <div id="save">
-            <p class="publish" onmouseover="check_publish()" onclick="publish() "> Publish </p>
-            <p class="save" onclick="save()"> Not saved </p>
+            <p class="publish" onmouseover="check_publish()" onclick="publish()"> Publish </p>
+            <p class="save" onclick="save('draft')"> Not saved </p>
             <p class="delete" onclick="deleteQuiz()"> Delete </p>
         </div>
     </div>
