@@ -73,10 +73,3 @@ socket.on('get_the_profile', function (data) {
         socket.emit("get_the_events", [code, document.URL.split("?")[1].split("=")[1]]);
     }
 });
-function logout() {
-localStorage.clear();
-var info = {
-        username: username
-    };
-    socket.emit("logout", [info, code]);
-}

@@ -9,18 +9,49 @@
     <link rel="stylesheet" href="../style/home.css">
     <link rel="stylesheet" href="../style/loading.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 
 <body>
 <div id="loading" w3-include-html="../includings/loading.html"></div>
-<div id="joined">
-    <h3>Joined</h3>
-</div>
-<div id="worldwide">
-    <h3>Worldwide</h3>
-</div>
-<div id="all">
-    <h3>All events</h3>
+<h1>Welcome to <strong>MEETK</strong> <strong id="name"></strong></h1>
+<div class="startingLinks">
+    <a href="../quizzes">
+        <div class="starting">
+            <h3>Play quizzes</h3>
+            <i class="fas fa-grip-horizontal"></i>
+        </div>
+    </a>
+    <a href="../newquiz">
+        <div class="starting">
+            <h3>Create new quiz</h3>
+            <i class="fas fa-plus"></i>
+        </div>
+    </a>
+    <a href="../realtime">
+        <div class="starting">
+            <h3>Play realtime quizzes</h3>
+            <i class="fas fa-clock"></i>
+        </div>
+    </a>
+    <a href="../myworks">
+        <div class="starting">
+            <h3>Manage your works</h3>
+            <i class="fas fa-folder"></i>
+        </div>
+    </a>
+    <a onclick="myprofile()">
+        <div class="starting">
+            <h3>See your profile </h3>
+            <i class="fas fa-user"></i>
+        </div>
+    </a>
+    <a href="../settings">
+        <div class="starting">
+            <h3>Manage your account</h3>
+            <i class="fas fa-cog"></i>
+        </div>
+    </a>
 </div>
 <div id="top-bar" w3-include-html="../includings/top-bar.html"></div>
 <script src="../includings/include.js"></script>

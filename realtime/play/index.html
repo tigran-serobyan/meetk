@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Meetk</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../../includings/the_code.js"></script>
+    <link rel="stylesheet" href="../../style/quiz.css">
+    <link rel="stylesheet" href="../../style/play.css">
+    <link rel="stylesheet" href="../../style/loading.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<div id="loading" w3-include-html="../../includings/loading.html"></div>
+<div id="timer"></div>
+<div id="startingTimer">
+    <p id="startingTimerSeconds"></p>
+</div>
+<div class="control">
+    <h3 id="code"></h3>
+    <div id="users"></div>
+    <button id="leave" onclick="leave()">Leave</button>
+</div>
+<div id="headerDiv">
+    <header id="top-image">
+        <h1 id="title"></h1>
+        <h2 id="subtitle"></h2>
+        <h3 id="username"></h3>
+        <b id="start" onclick="startGame()"></b>
+    </header>
+</div>
+<div id="question" class="question"></div>
+<div id="end" class="question">
+    <div id="endimage" class="img">
+
+    </div>
+</div>
+<script src="../../includings/include.js"></script>
+<script src="../../includings/connect_and_get_ip.js"></script>
+<script src="play.js"></script>
+<script src="../../includings/openprofile.js"></script>
+</body>
+
+</html>

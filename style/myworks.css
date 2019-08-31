@@ -63,39 +63,19 @@ body{
 input:focus{
     outline: none;
 }
-#events{
-    display: inline-block;
-    position: absolute;
-    width: 40%;
-    top: 100px;
-    left: 0px;
-    border-top: dashed 2px #acacac;
-    margin: 0% 3%;
-}
 #quizzes{
     display: inline-block;
     position: absolute;
-    width: 40%;
+    width: 93%;
     top: 100px;
-    left: 50%;
+    left: 0;
     border-top: dashed 2px #acacac;
-    margin: 0% 3%;
-}
-.event{
-    display: inline-block;
-    width: 48%;
-    margin: 1%;
-    height: 200px;
-    box-sizing: border-box;
-    color:white;
-    border-radius: 25px;
-    background-size: cover;
-    position: relative;
+    margin: 0 3.5%;
 }
 .quiz{
     display: inline-block;
-    width: 48%;
-    margin: 1%;
+    width: 19%;
+    margin: 0.5%;
     height: 200px;
     box-sizing: border-box;
     color:white;
@@ -130,4 +110,17 @@ input:focus{
     position: absolute;
     top: 200px;
     margin: 200px 47%;
+}
+@media only screen and (max-width: 1000px){
+    .quiz{
+        display: inline-block;
+        width: 49%;
+        margin: 0.5%;
+        height: 200px;
+        box-sizing: border-box;
+        color:white;
+        border-radius: 25px;
+        background-size: cover;
+        position: relative;
+    }
 }

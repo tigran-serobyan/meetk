@@ -373,22 +373,16 @@ function save(type) {
 save_text();
 var the_type = "draft";
 
-function logout() {
-    localStorage.clear();
-    var info = {
-        username: username
-    };
-    socket.emit("logout", [info, code]);
-}
+
 
 function deleteQuiz() {
-    socket.emit("save_quiz", [code, {
+    socket.emit("save_quiz", {
         id,
         type: "published"
-    }]);
-    socket.emit("save_quiz", [code, {
+    });
+    socket.emit("save_quiz", {
         id: id,
         type: "draft",
-    }]);
+    });
     window.open("../myworks", "_self");
 }

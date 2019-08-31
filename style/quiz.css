@@ -145,19 +145,6 @@ header a {
     box-sizing: border-box;
 }
 
-.free-space {
-    font-size: 20px;
-    display: block;
-    min-height: 20px;
-    color: rgba(0, 0, 0, 0);
-}
-
-#end #copyright {
-    font-size: 12px;
-    display: inline-block;
-    width: 50%;
-}
-
 #end h3 {
     font-size: 90px;
 }

@@ -112,7 +112,11 @@ socket.on('get_quiz', function (data) {
                 window.open('../page-not-found', '_self');
             } else {
                 document.getElementById("top-image").style.backgroundImage = "url('../style/quiznotfound.png')";
-                document.getElementById("title").innerText = 'This Quiz is not available for you';
+                document.getElementById("title").innerText = 'You already pass this quiz';
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('questions').style.display = 'none';
+                document.getElementById('end').style.display = 'none';
+                document.getElementById('start').style.display = 'none';
             }
         }
     }

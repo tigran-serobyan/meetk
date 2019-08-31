@@ -1,23 +1,27 @@
 <span id="search-span">
     <form>
-        <input type="text" placeholder="Search.." name="search" id="search-input" oninput="search_event()">
+        <input type="text" placeholder="Search.." name="search" id="search-input" oninput="searchInput()">
     </form>
 </span>
 <span id="top-buttons-span">
     <ul class="top-bar-menu">
+        <a id="home-top-button" href="../home">
+        <li id="home-top-button-li">
+            Home
+        </li>
+        </a>
         <li id="add-top-button">
             My stuff
             <div class="dropdown">
-                <a id="new-event-top-button" href="../newevent">New event</a>
                 <a id="new-quiz-top-button" href="../newquiz">New quiz</a>
-                <a id="new-quiz-top-button" href="../myworks">My works</a>
+                <a id="my-works-top-button" href="../myworks">My works</a>
             </div>
         </li>
         <li id="events-top-button">
             Play
             <div class="dropdown">
-                <a id="all-event-top-button" href="../home">Events</a>
-                <a id="real-time-top-button">Real time</a>
+                <a id="all-quizzes-top-button" href="../quizzes">Quizzes</a>
+                <a id="real-time-top-button" href="../realtime">Real time</a>
             </div>
         </li>
         <li id="profile-top-button">

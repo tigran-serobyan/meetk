@@ -4,7 +4,9 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const ip = require('ip');
 const fs = require('fs-extra');
-
+var users = [];
+var logInData = [];
+var quiz = [];
 const usersJson = fs.readJsonSync('./json/users.json');
 if (usersJson.users) {
     users = usersJson.users;
@@ -17,20 +19,15 @@ if (logInDataJson.data) {
 } else {
     logInData = [];
 }
-const eventsJson = fs.readJsonSync('./json/events.json');
-if (eventsJson.data) {
-    events = eventsJson.data;
-} else {
-    events = [];
-}
 const quizJson = fs.readJsonSync('./json/quiz.json');
 if (quizJson.data) {
     quiz = quizJson.data;
 } else {
     quiz = [];
 }
+let realtime = [];
 const url = ip.address();
-console.log(url);
+console.log('App is availabe in: ' + url + ':3000'+', with ');
 const date = new Date();
 app.use(express.static("."));
 app.get('/', function (req, res) {
@@ -39,8 +36,14 @@ app.get('/', function (req, res) {
 app.get('/home', function (req, res) {
     res.redirect('./home');
 });
-app.get('/event/:eventlink', function (req, res) {
-    res.redirect('../event?id=' + req.params.eventlink);
+app.get('/quizzes', function (req, res) {
+    res.redirect('./quizzes');
+});
+app.get('/realtime', function (req, res) {
+    res.redirect('./realtime');
+});
+app.get('/realtime/play/:gameCode', function (req, res) {
+    res.redirect('../../../realtime/play?code=' + req.params.gameCode);
 });
 app.get('/quiz/:eventlink', function (req, res) {
     res.redirect('../quiz?id=' + req.params.eventlink);
@@ -50,12 +53,6 @@ app.get('/newquiz', function (req, res) {
 });
 app.get('/newquiz/:link', function (req, res) {
     res.redirect('../newquiz?id=' + req.params.link);
-});
-app.get('/newevent/', function (req, res) {
-    res.redirect('./newevent');
-});
-app.get('/newevent/:link', function (req, res) {
-    res.redirect('../newevent?id=' + req.params.link);
 });
 app.get('/myworks', function (req, res) {
     res.redirect('./myworks');
@@ -82,9 +79,6 @@ app.get('*', function (req, res) {
 server.listen(3000);
 
 function saveDataOnJson() {
-    fs.writeJson('./json/events.json', {"data": events}, err => {
-        if (err) return console.log(err);
-    });
     fs.writeJson('./json/quiz.json', {"data": quiz}, err => {
         if (err) return console.log(err);
     });
@@ -97,9 +91,18 @@ function saveDataOnJson() {
     console.log("All Info saved in json files");
 }
 
+function logInInfo(code, username, login = true) {
+    return {
+        "username": username,
+        "data": date.getFullYear() + "." + (date.getUTCMonth() + 1) + "." + date.getUTCDate() + "." + date.getDay() + "." + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+        "code": code,
+        "login": login
+    };
+}
+
 setInterval(() => {
     saveDataOnJson();
-}, 600000);
+}, 300000);
 io.on('connection', function (socket) {
     socket.on("open", function (data) {
         let info = data[0];
@@ -112,44 +115,14 @@ io.on('connection', function (socket) {
                 }
             }
             if (username) {
-                let logInInfo = {
-                    "username": info.username,
-                    "data": date.getFullYear() + "." + (date.getUTCMonth() + 1) + "." + date.getUTCDate() + "." + date.getDay() + "." + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-                    "code": code,
-                    "login": true
-                };
-                logInData.push(logInInfo);
-                io.sockets.emit("logedin", [code, logInInfo]);
+                logInData.push(logInInfo(code, info.username));
+                io.sockets.emit("logedin", [code, logInInfo(code, info.username)]);
             } else {
-                let logInInfo = {
-                    "username": info.username,
-                    "data": date.getFullYear() + "." + date.getUTCDate() + "." + date.getDay() + "." + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-                    "code": code,
-                    "login": false
-                };
-                logInData.push(logInInfo);
+                logInData.push(logInInfo(code, info.username, false));
                 io.sockets.emit("notlogedin", code);
             }
         } else {
             io.sockets.emit("notlogedin", code);
-        }
-    });
-    socket.on("get_events", function (data) {
-        let published_events = [];
-        for (let i in events) {
-            if (events[i].type === "published") {
-                published_events.push(events[i]);
-            }
-        }
-        io.sockets.emit("get_events", [data, published_events]);
-    });
-    socket.on("joinEvent", function (data) {
-        let code = data[0];
-        for (let i in events) {
-            if (events[i].id === data[2]) {
-                events[i].users.push(data[1]);
-                io.sockets.emit("joinEvent", code);
-            }
         }
     });
     socket.on("register", function (data) {
@@ -176,15 +149,9 @@ io.on('connection', function (socket) {
                 username = info.password === users[i].password;
             }
         }
-        if (username) {
-            const info = {
-                "username": info.username,
-                "data": date.getFullYear() + "." + (date.getUTCMonth() + 1) + "." + date.getUTCDate() + "." + date.getDay() + "." + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-                "code": code,
-                "login": true
-            }
-            logInData.push(info);
-            io.sockets.emit("logedin", [code, info]);
+        if (username && info) {
+            logInData.push(logInInfo(code, info.username));
+            io.sockets.emit("logedin", [code, logInInfo(code, info.username)]);
         } else {
             io.sockets.emit("no_login", code);
         }
@@ -192,47 +159,59 @@ io.on('connection', function (socket) {
     socket.on("logout", function (data) {
         let info = data[0];
         let code = data[1];
-        info = {
-            "username": info.username,
-            "data": date.getFullYear() + "." + date.getUTCDate() + "." + date.getDay() + "." + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-            "code": code,
-            "login": false
-        }
-        logInData.push(info);
+        logInData.push(logInInfo(code, info.username, false));
         io.sockets.emit("notlogedin", code);
     });
-    socket.on("get_event", function (data) {
-        let the_event = "none";
-        for (let i in events) {
-            if (events[i].link === data[1]) {
-                the_event = events[i];
-                break;
+    socket.on("get_my_works", function (data) {
+        let the_quizzes = [];
+        for (let i in quiz) {
+            if (quiz[i].username === data[1] && quiz[i].type !== 'deleted' && quiz[i].type !== 'published') {
+                the_quizzes.push(quiz[i]);
             }
         }
-        for (let i in the_event.quizzes) {
-            for (let j in quiz) {
-                if (the_event.quizzes[i].link === quiz[j].id) {
-                    let the_date = the_event.quizzes[i].date;
-                    the_event.quizzes[i] = quiz[j];
-                    the_event.quizzes[i].date = the_date
-                }
+        io.sockets.emit("get_my_works", [data[0], the_quizzes]);
+    });
+    socket.on("get_quizzes", function (data) {
+        let published_quizzes = [];
+        for (let i in quiz) {
+            if (quiz[i].type === "published") {
+                published_quizzes.push({
+                    title: quiz[i].title,
+                    username: quiz[i].username,
+                    id: quiz[i].id,
+                    results: quiz[i].results,
+                    topimage: quiz[i].topimage
+                });
             }
         }
-        io.sockets.emit("get_event", [data[0], the_event]);
+        io.sockets.emit("get_quizzes", [data, published_quizzes]);
+    });
+    socket.on("get_the_quizzes", function (data) {
+        let the_quizzes = [];
+        for (let i in quiz) {
+            if (quiz[i].username === data[1] && quiz[i].type === "published") {
+                the_quizzes.push(quiz[i]);
+            }
+        }
+        io.sockets.emit("get_the_quizzes", [data[0], the_quizzes]);
     });
     socket.on("get_quiz", function (data) {
         let the_quiz = "none";
         for (let i in quiz) {
             if (quiz[i].id === data[1]) {
                 let hasPoints = false;
-                for (let resultI in quiz[i].results) {
-                    if (quiz[i].results[resultI].username === data[2]) {
-                        hasPoints = true;
-                        the_quiz = "Done";
-                        break;
+                if (typeof quiz[i].results == 'object') {
+                    for (let result of quiz[i].results) {
+                        if (result.username === data[2]) {
+                            hasPoints = true;
+                            the_quiz = "Done";
+                            break;
+                        }
                     }
-                }
-                if (!hasPoints) {
+                    if (!hasPoints) {
+                        the_quiz = quiz[i];
+                    }
+                } else {
                     the_quiz = quiz[i];
                 }
                 break;
@@ -245,9 +224,9 @@ io.on('connection', function (socket) {
             if (quiz[i].id === data.quizId) {
                 if (quiz[i].results) {
                     let hasPoints = false;
-                    for (let resultI in quiz[i].results) {
-                        if (quiz[i].results[resultI].username === data.username) {
-                            quiz[i].results[resultI] = {username: data.username, points: data.points};
+                    for (let j in quiz[i].results) {
+                        if (quiz[i].results[j].username === data.username) {
+                            quiz[i].results[j] = {username: data.username, points: data.points};
                             hasPoints = true;
                             break;
                         }
@@ -259,48 +238,19 @@ io.on('connection', function (socket) {
                     quiz[i].results = [];
                     quiz[i].results.push({username: data.username, points: data.points});
                 }
+                for (let j in users) {
+                    if (users[j].username === data.username) {
+                        if (!users[j].points) {
+                            users[j].points = [];
+                        }
+                        users[j].points[data.id] = data.points;
+                    }
+                }
                 break;
             }
         }
     });
-    socket.on("get_the_quizzes", function (data) {
-        let the_quizzes = [];
-        for (let i in quiz) {
-            if (quiz[i].username === data[1] && quiz[i].type === "published") {
-                the_quizzes.push(quiz[i]);
-            }
-        }
-        io.sockets.emit("get_the_quizzes", [data[0], the_quizzes]);
-    });
-    socket.on("get_the_events", function (data) {
-        let the_events = [];
-        for (let i in events) {
-            if (events[i].username === data[1] && events[i].type === "published") {
-                the_events.push(events[i]);
-            }
-        }
-        io.sockets.emit("get_the_events", [data[0], the_events]);
-    });
-    socket.on("get_my_works", function (data) {
-        let the_quizzes = [];
-        for (let i in quiz) {
-            if (quiz[i].username === data[1] && quiz[i].type !== 'deleted' && quiz[i].type !== 'published') {
-                the_quizzes.push(quiz[i]);
-            }
-        }
-        let the_events = [];
-        for (let i in events) {
-            if (events[i].username === data[1] && events[i].type !== 'deleted') {
-                the_events.push(events[i]);
-            }
-        }
-        io.sockets.emit("get_my_works", [data[0], the_quizzes, the_events]);
-    });
     socket.on("save_quiz", function (data) {
-        if (data.length > 1) {
-            let code = data[0];
-            let data = data[1];
-        }
         let newquiz = true;
         for (let i in quiz) {
             if (quiz[i].id === data.id && quiz[i].type === data.type) {
@@ -312,37 +262,19 @@ io.on('connection', function (socket) {
             quiz.push(data);
         }
     });
-    socket.on("save_event", function (data) {
-        if (data.length > 1) {
-            let code = data[0];
-            let data = data[1];
-        }
-        let newevent = true;
-        for (let i in events) {
-            if (events[i].id === data.id) {
-                events[i] = data;
-                newevent = false;
-            }
-        }
-        if (newevent) {
-            events.push(data);
-        }
-        if (data.type === 'deleted') {
-            io.sockets.emit('event_deleted', code);
-        }
-    });
     socket.on("get_the_profile", function (data) {
         let profile = false;
         for (let i in users) {
             if (users[i].username === data[1]) {
                 let user_info = {};
                 for (let j in users[i]) {
-                    if (j != "password") {
-                        user_info[j] = users[i][j]
+                    if (j !== "password") {
+                        user_info[j] = users[i][j];
                     }
                 }
                 profile = true;
                 io.sockets.emit("get_the_profile", [data[0], user_info]);
+                break;
             }
         }
         if (!profile) {
@@ -355,6 +287,110 @@ io.on('connection', function (socket) {
                 for (let j in data) {
                     users[i][j] = data[j];
                 }
+            }
+        }
+    });
+
+    socket.on("new_realtime_game", function (data) {
+        for (let i of quiz) {
+            if (i.id == data.id) {
+                const game = {
+                    quiz: i,
+                    id: data.id,
+                    code: data.gameCode,
+                    creator: data.username,
+                    users: [data.username],
+                };
+                realtime.push(game);
+                socket.emit('join_realtime_game', data);
+            }
+        }
+    });
+    socket.on("get_realtime_game", function (data) {
+        let notFound = true;
+        for (let i in realtime) {
+            if (realtime[i].code === data.gameCode) {
+                for (let j in realtime[i].users) {
+                    if (realtime[i].users[j] === data.username) {
+                        socket.emit('get_realtime_game', {code: data.code, game: realtime[i]});
+                        notFound = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (notFound) {
+            socket.emit('get_realtime_game', {
+                code: data.code,
+                gameCode: 'notFound'
+            });
+        }
+    });
+    socket.on("join_realtime_game", function (data) {
+        let notFound = true;
+        for (let i in realtime) {
+            if (realtime[i].code === data.gameCode) {
+                let joined = false;
+                for (let user of realtime[i].users) {
+                    if (user === data.username) {
+                        joined = true;
+                        socket.emit('join_realtime_game', data);
+                    }
+                }
+                if (joined) {
+                    socket.emit('join_realtime_game', data);
+                    notFound = false;
+                } else {
+                    realtime[i].users.push(data.username);
+                    socket.emit('join_realtime_game', data);
+                    notFound = false;
+                }
+                break;
+            }
+        }
+        if (notFound) {
+            socket.emit('join_realtime_game', {
+                code: data.code,
+                gameCode: 'notFound'
+            });
+        }
+    });
+    socket.on("leave_realtime_game", function (data) {
+        for (let i in realtime) {
+            if (realtime[i].code === data.gameCode) {
+                for (let j in realtime[i].users) {
+                    if (realtime[i].users[j] === data.username) {
+                        realtime[i].users.splice(j, 1);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    });
+    socket.on("start_realtime_game", function (data) {
+        for (let game in realtime) {
+            if (realtime[game].code === data) {
+                realtime[game].status = 'started';
+                for (let i of quiz) {
+                    if (parseInt(i.id) === parseInt(realtime[game].id) && i.type === 'published') {
+                        let timer = 0;
+                        io.sockets.emit('start_realtime_game', data);
+                        for (let question of i.questions) {
+                            setTimeout(function () {
+                                io.sockets.emit('get_realtime_game_question', {gameCode: data, question: question});
+                            }, (12000 * timer) + 5000);
+                            setTimeout(function () {
+                                io.sockets.emit('check_realtime_game_answer', data);
+                            }, (12000 * timer) + 15000);
+                            ++timer;
+                        }
+                        setTimeout(function () {
+                            io.sockets.emit('realtime_game_end', data);
+                        }, (12000 * timer) + 5000);
+                    }
+                }
+                break;
             }
         }
     });
