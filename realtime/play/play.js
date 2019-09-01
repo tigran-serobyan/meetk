@@ -1,6 +1,7 @@
 var username;
 var width = 0;
 var gameCode = '';
+var gameStarted = false;
 var quiz = {};
 
 socket.on('logedin', function (data) {
@@ -9,10 +10,11 @@ socket.on('logedin', function (data) {
         document.getElementById('loading').style.display = 'block';
         document.getElementById('loading' + (Math.floor(Math.random() * 5) + 1)).style.display = 'block';
         document.getElementById('startingTimer').style.display = 'none';
+        gameCode = (document.URL.split("?"))[1].split("=")[1].split("#")[0];
         socket.emit("get_realtime_game", {
             code,
             username,
-            gameCode: (document.URL.split("?"))[1].split("=")[1].split("#")[0]
+            gameCode
         });
     }
 });
@@ -27,47 +29,69 @@ socket.on('get_realtime_game', function (data) {
         if (data.gameCode === 'notFound') {
             window.open('../', '_self');
         } else {
-            document.getElementById("question").style.display = 'none';
-            gameCode = data.game.code;
-            quiz = data.game.quiz;
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('users').innerHTML = '';
-            document.getElementById('code').innerText = 'Code: ' + data.game.code;
-            document.getElementById("top-image").style.backgroundImage = "url('" + data.game.quiz.topimage + "')";
-            document.getElementById("title").innerText = data.game.quiz.title;
-            document.getElementById("subtitle").innerText = data.game.quiz.subtitle;
-            document.getElementById("endimage").style.backgroundImage = quiz.end_image;
-            if (data.game.creator === username) {
-                document.getElementById("start").innerText = data.game.quiz.start;
-            } else {
-                document.body.removeChild(document.getElementById("start"));
-            }
-            for (let i of data.game.users) {
-                let user = document.createElement('div');
-                user.innerText = i;
-                user.setAttribute('class', 'user');
-
+            if(!gameStarted){
+                document.getElementById("question").style.display = 'none';
+                gameCode = data.game.code;
+                quiz = data.game.quiz;
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('code').innerText = 'Code: ' + data.game.code;
+                document.getElementById("top-image").style.backgroundImage = "url('" + data.game.quiz.topimage + "')";
+                document.getElementById("title").innerText = data.game.quiz.title;
+                document.getElementById("subtitle").innerText = data.game.quiz.subtitle;
+                document.getElementById("endimage").style.backgroundImage = quiz.end_image;
                 if (data.game.creator === username) {
-                    user.setAttribute('class', 'user me');
-                }
-                if (data.game.creator === i) {
-                    user.setAttribute('class', 'user creator');
-                }
-                if (data.game.creator === username && data.game.creator === i) {
-                    user.setAttribute('class', 'user creator me');
-                }
-
-                document.getElementById('users').appendChild(user);
-            }
-            if (data.game.status) {
-                if (data.game.status === 'waiting') {
-                    document.getElementById('headerDiv').style.display = 'block';
+                    document.getElementById("start").innerText = data.game.quiz.start;
                 } else {
-                    window.open('../', '_self');
+                    document.getElementById("start").style.display = 'none';
+                }
+                if (data.game.status) {
+                    if (data.game.status === 'waiting') {
+                        document.getElementById('headerDiv').style.display = 'block';
+                    } else {
+                        window.open('../', '_self');
+                    }
+                }
+            } else {
+                if(data.game.results){
+                    console.log(data.game.results);
+                    let leaderBoard = document.createElement('div');
+                    leaderBoard.setAttribute('class','leaderBoard');
+                    let list = document.createElement('ul');
+                    let usersByPoint = [];
+                    for(let i in data.game.results){
+                        let newList = [];
+                            if(usersByPoint.length){
+                            let notPushed = true;
+                            for(let j in usersByPoint){
+                                if(data.game.results[i] >= usersByPoint[j].points && (usersByPoint[j+1]?usersByPoint[j+1].points>=data.game.results[i]:true) && notPushed){
+                                    newList.push({username:i,points:data.game.results[i]});
+                                    newList.push(usersByPoint[j]);
+                                    notPushed = false;
+                                } else{
+                                    newList.push(usersByPoint[j]);
+                                }
+                            }
+                            if(notPushed){newList.push({username:i,points:data.game.results[i]})}
+                            } else{ newList.push({username:i,points:data.game.results[i]})};
+                        usersByPoint = newList;
+                    }
+                    for(let i in usersByPoint){
+                        let user = document.createElement('li');
+                        user.innerHTML = '<strong>' + usersByPoint[i].username + '</strong> <strong>' + usersByPoint[i].points + '</strong>';
+                        if (usersByPoint[i].username === username) {
+                            user.setAttribute('class','me');
+                        }
+                        list.appendChild(user);
+                    }
+                    leaderBoard.appendChild(list);
+                    document.body.appendChild(leaderBoard);
+                    setTimeout( function () {
+                        leaderBoard.style.display = 'none';
+                    }, 2500);
                 }
             }
         }
-    }
+   }
 });
 
 
@@ -181,6 +205,20 @@ socket.on("check_realtime_game_answer", function (data) {
                 document.getElementsByTagName('input')[0].setAttribute('class', 'false');
             }
         }
+        socket.emit("set_points_realtime_game", {
+            points,
+            username,
+            gameCode
+        });
+
+        setTimeout( function () {
+            gameStarted = true;
+            socket.emit("get_realtime_game", {
+                code,
+                username,
+                gameCode
+            });
+        }, 2000);
     }
 });
 

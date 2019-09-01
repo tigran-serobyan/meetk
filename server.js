@@ -27,7 +27,7 @@ if (quizJson.data) {
 }
 let realtime = [];
 const url = ip.address();
-console.log('App is availabe in: ' + url + ':3000'+', with ');
+console.log('App is availabe with this url: ' + url + ':3000'+', in devices that connected this network.');
 const date = new Date();
 app.use(express.static("."));
 app.get('/', function (req, res) {
@@ -368,6 +368,17 @@ io.on('connection', function (socket) {
             }
         }
     });
+    socket.on("set_points_realtime_game", function (data) {
+        for (let i in realtime) {
+            if (realtime[i].code === data.gameCode) {
+                if (!realtime[i].results) {
+                    realtime[i].results = {};
+                }
+                realtime[i].results[data.username] = data.points;
+                break;
+            }
+        }
+    });
     socket.on("start_realtime_game", function (data) {
         for (let game in realtime) {
             if (realtime[game].code === data) {
@@ -379,20 +390,19 @@ io.on('connection', function (socket) {
                         for (let question of i.questions) {
                             setTimeout(function () {
                                 io.sockets.emit('get_realtime_game_question', {gameCode: data, question: question});
-                            }, (12000 * timer) + 5000);
+                            }, (15000 * timer) + 5000);
                             setTimeout(function () {
                                 io.sockets.emit('check_realtime_game_answer', data);
-                            }, (12000 * timer) + 15000);
+                            }, (15000 * timer) + 15000);
                             ++timer;
                         }
                         setTimeout(function () {
                             io.sockets.emit('realtime_game_end', data);
-                        }, (12000 * timer) + 5000);
+                        }, (15000 * timer) + 5000);
                     }
                 }
                 break;
             }
         }
     });
-
 });

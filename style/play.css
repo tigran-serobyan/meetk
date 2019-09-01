@@ -1,7 +1,7 @@
 .control {
     background: #fffa;
     width: 200px;
-    height: 200px;
+    height: 50px;
     bottom: 20px;
     left: 10px;
     position: fixed;
@@ -142,7 +142,15 @@ header b {
     height: 100%;
     width: 100%;
 }
-
+#question .img{
+    position: fixed;
+    height: 100%;
+    left: 0;
+}
+#question .questionDiv{
+    position: fixed;
+    right: 0;
+}
 .clicked {
     background: #c07300 !important;
     border-color: #c07300 !important;
@@ -164,4 +172,52 @@ header b {
 #timer {
     z-index: 3;
     transition: linear;
+}
+
+.leaderBoard{
+    display: block;
+    background: #000d;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+}
+
+.leaderBoard ul{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 20px;
+}
+
+.leaderBoard ul li{
+    list-style-type: none;
+}
+
+.leaderBoard ul li strong:nth-child(1){
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+.leaderBoard ul li strong:nth-last-child(1){
+    margin-right: 20px;
+}
+
+.leaderBoard ul li:nth-child(1) strong:nth-child(1){
+    font-size: 40px;
+}
+
+.leaderBoard ul li:nth-child(1) strong:nth-last-child(1){
+    font-size: 30px;
+}
+
+.leaderBoard .me strong:nth-child(1){
+    font-size: 50px;
+}
+
+.leaderBoard .me strong:nth-last-child(1){
+    font-size: 40px;
 }

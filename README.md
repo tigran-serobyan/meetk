@@ -1,2 +1,3 @@
 # Meetk
-A social network for creating and sharing your quizzes with your friends
+Create and share your quizzes with your friends
+Play quizzes realtime.
