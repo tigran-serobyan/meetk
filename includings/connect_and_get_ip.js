@@ -112,4 +112,5 @@ socket.on('no_login', no_login);
 function logout() {
     localStorage.setItem('meetk_username', '');
     localStorage.setItem('meetk_password', '');
+    window.open('./','_self');
 }

@@ -241,9 +241,10 @@ io.on('connection', function (socket) {
                 for (let j in users) {
                     if (users[j].username === data.username) {
                         if (!users[j].points) {
-                            users[j].points = [];
+                            users[j].points = {};
                         }
-                        users[j].points[data.id] = data.points;
+                        users[j].points[data.quizId] = data.points;
+                        console.log(users[j].points);
                     }
                 }
                 break;
@@ -268,6 +269,7 @@ io.on('connection', function (socket) {
             if (users[i].username === data[1]) {
                 let user_info = {};
                 for (let j in users[i]) {
+console.log(users[i].points);
                     if (j !== "password") {
                         user_info[j] = users[i][j];
                     }

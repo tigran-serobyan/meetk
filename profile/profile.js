@@ -15,30 +15,28 @@ socket.on('notlogedin', function (data) {
         window.open("../", "_self");
     }
 });
-socket.on('get_the_events', function (data) {
+socket.on('get_the_quizzes', function (data) {
     if (am_i(data[0], code)) {
-        document.getElementById("events").innerHTML = "<h3 id='events-title'>Events</h3>";
-        document.getElementById("events").display = "none";
-        events = data[1];
-        for (var i = events.length - 1; i >= 0; i--) {
+        document.getElementById("quizzes").display = "none";
+        quizzes = data[1];
+        for (var i = quizzes.length - 1; i >= 0; i--) {
             var bigdiv = document.createElement("div");
             bigdiv.setAttribute("class", "event");
             var div = document.createElement("div");
             div.setAttribute("class", "gray");
             bigdiv.appendChild(div);
-            bigdiv.style.backgroundImage = "url('" + events[i].topimage + "')";
+            bigdiv.style.backgroundImage = "url('" + quizzes[i].topimage + "')";
             var title = document.createElement("h2");
-            title.innerText = events[i].name;
+            title.innerText = quizzes[i].title;
             div.appendChild(title);
             var creator = document.createElement("h3");
-            creator.innerText = events[i].username;
+            creator.innerText = quizzes[i].creator;
             div.appendChild(creator);
-            document.getElementById("events").style.display = "block";
-            document.getElementById("events").appendChild(bigdiv);
+            document.getElementById("quizzes").style.display = "block";
+            document.getElementById("quizzes").appendChild(bigdiv);
             var open_text = document.createElement("a");
             open_text.setAttribute("class", "open_button");
-            console.log( "../event/" + events[i].id);
-            open_text.setAttribute("href", "../event/" + events[i].id);
+            open_text.setAttribute("href", "../quiz/" + quizzes[i].id);
             open_text.onclick = function () { socket.emit("event", [code, (this.href.split("/"))[4]]) };
             open_text.innerText = "OPEN";
             div.appendChild(open_text);
@@ -47,6 +45,7 @@ socket.on('get_the_events', function (data) {
 });
 socket.on('get_the_profile', function (data) {
     if (am_i(data[0], code)) {
+console.log(data);
         if(!data[1].username){
             window.open('../page-not-found','_self');
         }
@@ -70,6 +69,6 @@ socket.on('get_the_profile', function (data) {
         else {
             document.getElementById("top").style.backgroundImage = "url('../style/profile_background.png')";
         }
-        socket.emit("get_the_events", [code, document.URL.split("?")[1].split("=")[1]]);
+        socket.emit("get_the_quizzes", [code, document.URL.split("?")[1].split("=")[1]]);
     }
 });
