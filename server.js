@@ -13,7 +13,7 @@ if (usersJson.users) {
 } else {
     users = [];
 }
-const logInDataJson = fs.readJsonSync('./json/logindata.json');
+const logInDataJson = fs.readJsonSync('./json/logInData.json');
 if (logInDataJson.data) {
     logInData = logInDataJson.data;
 } else {
