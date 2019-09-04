@@ -1,34 +1,34 @@
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const ip = require('ip');
-const fs = require('fs-extra');
-var users = [];
-var logInData = [];
-var quiz = [];
-const usersJson = fs.readJsonSync('./json/users.json');
-if (usersJson.users) {
+let express = require('express');
+let app = express();
+let server = require('http').Server(app);
+let io = require('socket.io')(server);
+let ip = require('ip');
+let fs = require('fs-extra');
+let users = [];
+let logInData = [];
+let quiz = [];
+let realtime = [];
+let usersJson = fs.readJsonSync('./json/users.json');
+if (usersJson ? usersJson.users : false) {
     users = usersJson.users;
 } else {
     users = [];
 }
-const logInDataJson = fs.readJsonSync('./json/logInData.json');
-if (logInDataJson.data) {
+let logInDataJson = fs.readJsonSync('./json/logInData.json');
+if (logInDataJson ? logInDataJson.data : false) {
     logInData = logInDataJson.data;
 } else {
     logInData = [];
 }
-const quizJson = fs.readJsonSync('./json/quiz.json');
-if (quizJson.data) {
+let quizJson = fs.readJsonSync('./json/quiz.json');
+if (quizJson ? quizJson.data : false) {
     quiz = quizJson.data;
 } else {
     quiz = [];
 }
-let realtime = [];
-const url = ip.address();
+let url = ip.address();
 console.log('App is availabe with this url: ' + url + ':3000' + ', in devices that connected this network.');
-const date = new Date();
+let date = new Date();
 app.use(express.static("."));
 app.get('/', function (req, res) {
     res.redirect('./');
@@ -253,7 +253,6 @@ io.on('connection', function (socket) {
                         if (!hasPoints) {
                             users[j].points.push({quiz: data.quizId, points: data.points});
                         }
-                        console.log(users[j].points);
                     }
                 }
                 break;
@@ -300,7 +299,6 @@ io.on('connection', function (socket) {
             }
         }
     });
-
     socket.on("new_realtime_game", function (data) {
         for (let i of quiz) {
             if (i.id == data.id) {

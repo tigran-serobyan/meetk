@@ -53,7 +53,6 @@ socket.on('get_realtime_game', function (data) {
                 }
             } else {
                 if(data.game.results){
-                    console.log(data.game.results);
                     let leaderBoard = document.createElement('div');
                     leaderBoard.setAttribute('class','leaderBoard');
                     let list = document.createElement('ul');

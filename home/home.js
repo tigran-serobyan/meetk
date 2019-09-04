@@ -17,7 +17,6 @@ socket.on('notlogedin', function (data) {
 socket.on('get_the_profile', function (data) {
     if (am_i(data[0], code)) {
         document.getElementById('loading').style.display = 'none';
-        console.log(data[1]);
         document.getElementById('name').innerText = data[1].name
     }
 });
