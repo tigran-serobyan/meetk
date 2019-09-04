@@ -1,3 +1,7 @@
+* {
+    font-family: sans-serif;
+}
+
 input {
     padding: 10px 15px;
     margin: 5px 0;
@@ -29,6 +33,6 @@ input:focus {
     display: block;
 }
 
-#error{
+#error {
     color: #990000;
 }

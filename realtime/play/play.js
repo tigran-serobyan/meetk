@@ -191,7 +191,7 @@ socket.on("check_realtime_game_answer", function (data) {
                 points--;
                 let question = document.getElementById('question');
                 for (let i of question.getElementsByTagName('button')) {
-                    i.disabled = true;
+                    i.disabled = true;  
                     i.setAttribute('class', 'false');
                 }
             }

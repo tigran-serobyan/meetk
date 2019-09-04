@@ -27,7 +27,7 @@ if (quizJson.data) {
 }
 let realtime = [];
 const url = ip.address();
-console.log('App is availabe with this url: ' + url + ':3000'+', in devices that connected this network.');
+console.log('App is availabe with this url: ' + url + ':3000' + ', in devices that connected this network.');
 const date = new Date();
 app.use(express.static("."));
 app.get('/', function (req, res) {
@@ -76,7 +76,7 @@ app.get('/settings', function (req, res) {
 app.get('*', function (req, res) {
     res.redirect('../page-not-found');
 });
-server.listen(3000);
+server.listen(3001);
 
 function saveDataOnJson() {
     fs.writeJson('./json/quiz.json', {"data": quiz}, err => {
@@ -240,10 +240,19 @@ io.on('connection', function (socket) {
                 }
                 for (let j in users) {
                     if (users[j].username === data.username) {
-                        if (!users[j].points) {
-                            users[j].points = {};
+                        if (!(users[j].points)) {
+                            users[j].points = [];
                         }
-                        users[j].points[data.quizId] = data.points;
+                        let hasPoints = false;
+                        for (let k in users[j].points) {
+                            if (users[j].points[k].quiz === data.quizId) {
+                                users[j].points[k].points = data.points;
+                                hasPoints = true;
+                            }
+                        }
+                        if (!hasPoints) {
+                            users[j].points.push({quiz: data.quizId, points: data.points});
+                        }
                         console.log(users[j].points);
                     }
                 }
@@ -269,7 +278,6 @@ io.on('connection', function (socket) {
             if (users[i].username === data[1]) {
                 let user_info = {};
                 for (let j in users[i]) {
-console.log(users[i].points);
                     if (j !== "password") {
                         user_info[j] = users[i][j];
                     }
