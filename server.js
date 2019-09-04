@@ -76,7 +76,7 @@ app.get('/settings', function (req, res) {
 app.get('*', function (req, res) {
     res.redirect('../page-not-found');
 });
-server.listen(3001);
+server.listen(3000);
 
 function saveDataOnJson() {
     fs.writeJson('./json/quiz.json', {"data": quiz}, err => {
