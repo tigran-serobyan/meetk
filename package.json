@@ -1,7 +1,7 @@
 {
   "name": "meetk",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "express": "^4.17.0",
     "extra": "^0.2.1",
     "fs": "0.0.1-security",
